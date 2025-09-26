@@ -1,7 +1,7 @@
 {
     "$schema": "https://mintlify.com/schema.json",
     "name": "WOO",
-    "openapi": ["openapi-merged.yaml", "openapi-merged.json", "openapi/openapi-merged.json"],
+    "openapi": ["openapi-merged.yaml", "openapi-merged.json"],
     "logo": {
       "dark": "/logo/WOO_X_Flat.svg",
       "light": "/logo/WOO_X_Additional.svg"
