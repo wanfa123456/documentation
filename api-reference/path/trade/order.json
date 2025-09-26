@@ -1,0 +1,124 @@
+{
+  "get": {
+    "description": "get order",
+    "parameters": {
+        "$ref": "../../parameters/getOrder.json#/parameters"
+      },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../responses/GetOrderResponse.json#/GetOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+     
+    ]
+  },
+  "post": {
+    "description": "post order",
+    "parameters": [
+          {
+            "$ref": "../../parameters/auth.json#/parameters/ApiKeyHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/SignatureHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/TimestampHeader"
+          }
+        ],  
+    "requestBody": {
+      "description": "",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../../schemas/CreateOrder.json#/CreateOrder"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../responses/CreateOrderResponse.json#/CreateOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+     
+    ]
+  },
+  "put": {
+    "description": "edit order",
+    "parameters": [
+          {
+            "$ref": "../../parameters/auth.json#/parameters/ApiKeyHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/SignatureHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/TimestampHeader"
+          }
+        ],  
+    "requestBody": {
+      "description": "",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../../schemas/EditOrder.json#/EditOrder"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../responses/EditOrderResponse.json#/EditOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+     
+    ]
+  },
+  "delete": {
+    "description": "cancel order",
+    "parameters": {
+        "$ref": "../../parameters/delOrder.json#/parameters"
+      },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../responses/CancelOrderResponse.json#/CancelOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      
+    ]
+  }
+}

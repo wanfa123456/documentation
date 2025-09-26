@@ -1,33 +1,73 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: ''
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
 
-## Welcome
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+## Overview
+The V3 REST and WebSocket APIs are our latest API offerings for programmatic trading, market data access, and account management.  V3 introduces a unified and standardized interface across spot and perpetual markets, built to offer lower latency, higher reliability, and greater consistency.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Key upgrades
+### REST APIs  
+**Clear subpath organization for business logic**  
+All V3 REST endpoints follow a structured subpath model for better clarity.  
 
-## Authentication
+| Subpath | Purpose | 
+|------|------|
+| /public | Public market data (no auth needed)   | 
+| /trading | Order placement & management   | 
+| /account | Account level configurations & data   | 
+| /assets | Deposits, withdrawals, token balances   | 
+| /futures | Perpetual specific endpoints   | 
+| /spotMargin | Spot margin functions   | 
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+#### Standardized authentication scheme
+All V3 REST endpoints follow a unified parameter handling scheme:
 
+- GET and DELETE requests pass parameters through the query string.
+- POST and PUT requests send parameters in the JSON-formatted request body.
+
+##### Consistent response format
+All V3 REST endpoints follow a standardized response structure.
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+    "success": true,
+    "data":{ ... },
+    "timestamp": 1717507200000
+}
 ```
+- success: Boolean indicating API call result
+
+- data: Response payload containing the requested information
+
+- timestamp: Server time in milliseconds (UTC)
+
+#### Consistent field naming
+All V3 REST endpoints enforce consistent naming across all product lines to the extent possible, and use camelCase for naming consistency in both request and response bodies.
+
+#### Strong typing discipline
+All V3 REST endpoints follow the following typing discipline:
+
+- Decimal fields are returned as strings to prevent precision errors.
+
+- Integer fields use numeric type.
+
+### WebSocket APIs
+#### WebSocket architecture rebuilt
+The V3 WebSocket infrastructure has been completely rebuilt to deliver a faster, more reliable, and developer-optimized experience. Key improvements include:
+
+- Reduced Latency – Faster data delivery
+
+- Improved Message Throughput - Higher message rates for real-time responsiveness
+
+- Greater Connection Stability – Robust under heavy load and network interruptions
+
+#### More order book depth options for different needs
+V3 offers flexible order book depth options with update frequencies tailored to depth levels (50, 200, 500), enabling more efficient and customizable market data streaming.
+
+#### Abbreviated field names
+V3 WebSocket payloads use shortened keys (e.g., px for price, sx for size) to reduce message size and I/O overhead.
+
+ 
+

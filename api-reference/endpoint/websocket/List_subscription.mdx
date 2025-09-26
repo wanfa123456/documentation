@@ -1,0 +1,31 @@
+---
+title: 'List subscription'
+---
+Retrieve a list of all topics currently subscribed to on the connection.
+
+<RequestExample>
+
+```bash Subscribed messages
+{
+  "id": .....
+  "cmd": "LIST_SUBSCRIPTION"
+}
+```
+
+</RequestExample>
+
+
+
+<ResponseExample>
+
+```json Response
+{
+  "id": "{req_id}",
+  "cmd": "LIST_SUBSCRIPTION",
+  "success": true,
+  "time": {timestamp},
+  "data": ["topic1", "topic2"]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,30 @@
+{
+	"get": {
+		"description": "Get basic futures information for all the markets.",
+		"parameters": [
+			{
+				"name": "symbol",
+				"in": "query",
+				"description": "Symbol name",
+				"required": false,
+				"explode": true,
+				"schema": {
+					"type": "string"
+				}
+			}
+		],
+		"responses": {
+			"200": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../../responses/FuturesResponse.json#/FuturesResponse"
+						}
+					}
+				}
+			}
+		},
+		"security": []
+	}
+}

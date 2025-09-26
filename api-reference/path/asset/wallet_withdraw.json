@@ -1,0 +1,42 @@
+{
+    "post": {
+      "description": "withdraw assets",
+      "parameters": [
+          {
+            "$ref": "../../parameters/auth.json#/parameters/ApiKeyHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/SignatureHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/TimestampHeader"
+          }
+        ],  
+      "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../schemas/Withdraw.json#/Withdraw"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/WithdrawResponse.json#/WithdrawResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    }
+  }

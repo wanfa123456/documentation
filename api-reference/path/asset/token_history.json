@@ -1,0 +1,23 @@
+{
+  "get": {
+    "description": "get token history",
+    "parameters": {
+      "$ref": "../../parameters/token_history.json#/parameters"
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../responses/TokenHistoryResponse.json#/TokenHistoryResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+     
+    ]
+  }
+}

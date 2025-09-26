@@ -1,0 +1,55 @@
+{
+	"MarketTradesResponse": {
+		"allOf": [
+			{
+				"$ref": "../common/commonResponse.json#/CommonResponse"
+			},
+			{
+				"type": "object",
+				"properties": {
+					"data": {
+						"type": "object",
+						"properties": {
+							"rows": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"symbol": {
+											"type": "string",
+											"description": ""
+										},
+										"side": {
+											"type": "string",
+											"description": ""
+										},
+										"source": {
+											"type": "number",
+											"description": ""
+										},
+										"executedPrice": {
+											"type": "string",
+											"description": ""
+										},
+										"executedQuantity": {
+											"type": "string",
+											"description": ""
+										},
+										"executedTimestamp": {
+											"type": "number",
+											"description": ""
+										},
+										"rpi": {
+											"type": "boolean",
+											"description": ""
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,141 @@
+---
+title: 'Integration guide'
+description: ''
+---
+<Note>
+
+  For developers migrating from V1 to V3 REST APIs, please also refer to the interface mapping provided <a href="migration_guide" target="_self">[here]</a>.
+
+</Note>
+
+## REST API Base Endpoint
+**Production**: `https://api.woox.io`
+
+**Staging**: `https://api.staging.woox.io`
+
+## API resources
+
+- [TG support channel](https://t.me/woo_english/246812)
+
+- [Discord support channel](https://discord.gg/woonetwork)
+
+## Authentication
+<Note>
+  Please log in to your WOO X account to generate an API key. For detailed instructions on how to create an API key, please refer to the guide available <a href="https://support.woox.io/hc/en-us/articles/4410291152793--API-creation" target="_self">[here]</a>.
+</Note>
+
+ WOO X uses HMAC encryption for request authentication.  The following HTTP request header keys must be included for authentication:
+
+- `x-api-key`  API key created from WOO X console
+
+- `x-api-timestamp`  Unix epoch time in milliseconds
+
+- `x-api-signature`  Encoded signature (see Request Example for more details)
+
+All requests need to be signed using `api_key` and `api_secret`.
+
+## Request Example
+Here we provide a simple example that shows you how to send a valid request to WOO X.
+Assume the following information:
+
+| Key | Value | Description | 
+|------|------|------|
+| `api_key` | AbmyVJGUpN064ks5ELjLfA==   | create from WOO X console  | 
+| `api_secret` | QHKRXHPAW1MC9YGZMAT8YDJG2HPR   | create from WOO X console  | 
+| `timestamp` | 1578565539808  | Unix epoch time in milliseconds  | 
+
+The `x-api-signature` header is generated as follows:
+
+1. Create a string concatenation: timestamp + request_method + request_path + request_body
+
+2. Sign the string in step 1 with the `api_secret` using the HMAC_SHA256 algorithm
+
+3. Convert the signature generated in step 2 to a hex string
+
+<Note>
+  Request parameters of a GET or DELETE request should be included in the request_path in the form of a query string.
+</Note>
+
+<Note>
+  If request_body is not empty, concatenate the request body json after stringifying.
+</Note>
+Put the HMAC signature in HTTP header `x-api-signature`, and put timestamp in `x-api-timestamp`, and also api_key in `x-api-key`.
+<Note>
+  For POST or PUT request, also put application/json in Content-Type in the HTTP request header.
+</Note>
+**If the GET request looks like**:
+
+```GET /v3/algo/orders?algoType=STOP```  
+
+**Normalize request content, the result will look like**:
+
+```1578565539808GET/v3/algo/orders?algoType=STOP```  
+
+Then use ```api-secret``` to generate a signature using the HMAC_SHA256 algorithm
+
+**If the POST request looks like**:
+
+```bash
+POST /v3/algo/order
+# request body
+{
+    "symbol": "PERP_BTC_USDT",
+    "side": "BUY",
+    "reduceOnly": false,
+    "type": "MARKET",
+    "quantity": "1",
+    "algoType": "TRAILING_STOP",
+    "callbackRate": "100"
+}
+```
+
+**Normalize request content, the result will look like**:
+
+```1578565539808POST/v3/algo/order{"symbol": "PERP_BTC_USDT", "side": "BUY", "reduceOnly": false, "type": "MARKET", "quantity": "1", "algoType": "TRAILING_STOP", "callbackRate": "100"}```  
+
+**Then use `api-secret` to generate a signature using the HMAC_SHA256 algorithm**
+
+**The final GET request would look like this**:
+```bash
+<aside style="font-family: monospace; white-space: pre-wrap; word-break: break-all; background: #CCC;">
+GET /v3/algo/orders?algoType=STOP
+x-api-key: AbmyVJGUpN064ks5ELjLfA==
+x-api-signature: 20da0852f73b20da0208c7e627975a59ff072379883d8457d03104651032033d
+x-api-timestamp: 1578565539808
+Content-Type: application/x-www-form-urlencoded
+</aside>
+```
+
+**The final POST request would look like this**:
+```bash
+<aside style="font-family: monospace; white-space: pre-wrap; word-break: break-all; background: #CCC;">
+POST /v3/algo/order
+x-api-key: AbmyVJGUpN064ks5ELjLfA==
+x-api-signature: 20da0852f73b20da0208c7e627975a59ff072379883d8457d03104651032033d
+x-api-timestamp: 1578565539808
+Content-Type: application/json
+{
+    "symbol": "PERP_BTC_USDT",
+    "side": "BUY",
+    "reduceOnly": false,
+    "type": "MARKET",
+    "quantity": "1",
+    "algoType": "TRAILING_STOP",
+    "callbackRate": "0.012"
+}
+</aside>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+{
+	"get": {
+		"description": "Get the available networks for each token as well as the deposit/withdrawal information.",
+		"parameters": [],
+		"responses": {
+			"200": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../../responses/TokenNetworkResponse.json#/TokenNetworkResponse"
+						}
+					}
+				}
+			}
+		},
+		"security": []
+	}
+}

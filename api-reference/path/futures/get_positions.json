@@ -1,0 +1,23 @@
+{
+    "get": {
+      "description": "get positions",
+      "parameters": {
+        "$ref": "../../parameters/getPositions.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/GetPositionsResponse.json#/GetPositionsResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        
+      ]
+    }
+  }

@@ -1,0 +1,44 @@
+{  
+  "get": {
+    "description": "get orders",
+    "parameters": {
+      "$ref": "../../parameters/getOrders.json#/parameters"
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../responses/GetOrdersResponse.json#/GetOrdersResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+     
+    ]
+  },
+  "delete": {
+    "description": "Cancel multiple orders",
+    "parameters": {
+        "$ref": "../../parameters/delOrders.json#/parameters"
+      },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../responses/CancelOrderResponse.json#/CancelOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+     
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+    "ListenKeyResponse": {
+        "allOf": [
+            {
+                "$ref": "../common/commonResponse.json#/CommonResponse"
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "authKey": {
+                                "type": "string",
+                                "description": "listenKey"
+                              },
+                              "expiredTime": {
+                                "type": "integer",
+                                "description": ""
+                              }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+

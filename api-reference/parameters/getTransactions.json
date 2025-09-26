@@ -1,0 +1,84 @@
+{
+    "parameters": [
+        {
+			"name": "x-api-key",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "abcdef123456"
+			},
+			"description": ""
+		  },
+		  {
+			"name": "x-api-signature",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "signaturestring"
+			},
+			"description": ""
+		  },
+		  {
+			"name": "x-api-timestamp",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "1718943200000"
+			},
+			"description": ""
+		  },
+          {
+            "name": "symbol",
+            "in": "query",
+            "description": "Symbol name",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "Start timestamp in Unix timestamp format in milliseconds",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "End timestamp in Unix timestamp format in milliseconds",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fromId",
+            "in": "query",
+            "description": "Trade Id to search from",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results per request",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+    ]
+}

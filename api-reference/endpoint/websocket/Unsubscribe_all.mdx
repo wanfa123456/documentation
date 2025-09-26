@@ -1,0 +1,31 @@
+---
+title: 'Unsubscribe all'
+---
+Unsubscribe from all currently subscribed topics in a single command.
+
+<RequestExample>
+
+```bash Subscribed messages
+{
+  "id": .....
+  "cmd": "UN_SUBSCRIBE_ALL"
+}
+```
+
+</RequestExample>
+
+
+
+<ResponseExample>
+
+```json Response
+{
+  "id": "{req_id}",
+  "cmd": "UN_SUBSCRIBE_ALL",
+  "success": true,
+  "time": {timestamp},
+  "data": ["topic1", "topic2"]
+}
+```
+
+</ResponseExample>

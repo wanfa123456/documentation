@@ -1,0 +1,119 @@
+{
+	"InstrumentsResponse": {
+		"allOf": [
+			{
+				"$ref": "../common/commonResponse.json#/CommonResponse"
+			},
+			{
+				"type": "object",
+				"properties": {
+					"data": {
+						"type": "object",
+						"properties": {
+							"rows": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"symbol": {
+											"type": "string",
+											"description": ""
+										},
+										"status": {
+											"type": "string",
+											"description": "TRADING, SUSPENDED, TESTING"
+										},
+										"baseAsset": {
+											"type": "string",
+											"description": ""
+										},
+										"baseAssetMultiplier": {
+											"type": "number",
+											"description": ""
+										},
+										"quoteAsset": {
+											"type": "string",
+											"description": ""
+										},
+										"quoteMin": {
+											"type": "number",
+											"description": ""
+										},
+										"quoteMax": {
+											"type": "number",
+											"description": ""
+										},
+										"quoteTick": {
+											"type": "number",
+											"description": ""
+										},
+										"baseMin": {
+											"type": "number",
+											"description": ""
+										},
+										"baseMax": {
+											"type": "number",
+											"description": ""
+										},
+										"baseTick": {
+											"type": "number",
+											"description": ""
+										},
+										"minNotional": {
+											"type": "number",
+											"description": ""
+										},
+										"bidCapRatio": {
+											"type": "number",
+											"description": ""
+										},
+										"bidFloorRatio": {
+											"type": "number",
+											"description": ""
+										},
+										"askCapRatio": {
+											"type": "number",
+											"description": ""
+										},
+										"askFloorRatio": {
+											"type": "number",
+											"description": ""
+										},
+										"fundingIntervalHours": {
+											"type": "number",
+											"description": ""
+										},
+										"fundingCap": {
+											"type": "number",
+											"description": ""
+										},
+										"fundingFloor": {
+											"type": "number",
+											"description": ""
+										},
+										"orderMode": {
+											"type": "string",
+											"description": "NORMAL, POST_ONLY, REDUCE_ONLY, CANCEL_ONLY"
+										},
+										"baseIMR": {
+											"type": "number",
+											"description": ""
+										},
+										"baseMMR": {
+											"type": "number",
+											"description": ""
+										},
+										"isAllowedRpi": {
+											"type": "boolean",
+											"description": "indicate whether RPI is enabled for the symbol "
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}

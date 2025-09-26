@@ -1,0 +1,41 @@
+{
+    "trailing_stop": {
+        "description": "",
+        "title": "Trailing stop",
+        "allOf": [
+            {
+                "$ref": "../../schemas/algo/common_algo.json#/common_algo"
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "algoType": {
+                        "type": "string",
+                        "description": "TRAILING_STOP: trailing stop order "
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Trigger price, only support LIMIT"
+                    },
+                    "activatedPrice": {
+                        "type": "string",
+                        "description": "Activated price"
+                    },
+                    "callbackRate": {
+                        "type": "string",
+                        "description": "Either callbackValue or callbackRate is required;  If both are passed, the request will be rejected"
+                    },
+                    "callbackValue": {
+                        "type": "string",
+                        "description": "Either callbackValue or callbackRate is required;  If both are passed, the request will be rejected"
+                    },
+                    "reduceOnly": {
+                        "type": "boolean",
+                        "description": "Only applicable to perpetual instruments; whether the order can only reduce in position size; valid options are true/false"
+                    }
+                }
+            }
+        ]
+    }
+}
+

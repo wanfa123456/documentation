@@ -1,0 +1,149 @@
+{
+    "parameters": [
+        {
+			"name": "x-api-key",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "abcdef123456"
+			},
+			"description": ""
+		  },
+		  {
+			"name": "x-api-signature",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "signaturestring"
+			},
+			"description": ""
+		  },
+		  {
+			"name": "x-api-timestamp",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "1718943200000"
+			},
+			"description": ""
+		  },
+          {
+            "name": "symbol",
+            "in": "query",
+            "description": "Symbol name",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "side",
+            "in": "query",
+            "description": "BUY/SELL",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "positionSide",
+            "in": "query",
+            "description": "BOTH for one way mode; LONG or SHORT for hedge mode; Only applicable to perpetual instruments",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "LIMIT/MARKET/IOC/FOK/POST_ONLY/LIQUIDATE/RPI",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderTag",
+            "in": "query",
+            "description": "Order tag",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "withRealizedPnl",
+            "in": "query",
+            "description": "Whether to return order’s realized pnl; Note that realized PnL is only calculated for Perpetual close orders.",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "NEW/CANCELLED/PARTIAL_FILLED/FILLED/REJECTED/INCOMPLETE/COMPLETED",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "Start timestamp in Unix timestamp format in milliseconds",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "End timestamp in Unix timestamp format in milliseconds",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Data size per page, max 500",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "maximum": 500
+            }
+          }
+    ]
+}

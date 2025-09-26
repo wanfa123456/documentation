@@ -1,0 +1,232 @@
+{
+    "$schema": "https://mintlify.com/schema.json",
+    "name": "WOO",
+    "openapi": ["openapi-merged.yaml", "openapi-merged.json", "openapi/openapi-merged.json"],
+    "logo": {
+      "dark": "/logo/WOO_X_Flat.svg",
+      "light": "/logo/WOO_X_Additional.svg"
+    },
+    "favicon": "/logo/WOO_X_Additional.svg",
+    "colors": {
+      "primary": "#0D9373",
+      "light": "#07C983",
+      "dark": "#0D9373",
+      "anchors": {
+        "from": "#07C983",
+        "to": "#0D9373"
+      }
+    },
+    "topbarLinks": [
+      {
+        "name": "Support",
+        "url": "https://support.woox.io/hc/en-us"
+      }
+    ],
+    "primaryTab": {
+      "name": "Home"
+    },
+    "tabs": [
+      {
+        "name": " V3 API",
+        "url": "api-reference"
+      },
+      {
+        "name": "Legacy API",
+        "url": "legacy-api-reference"
+      },
+      {
+        "name": "Changelog",
+        "url": "changelog"
+      }
+    ],
+    "anchors": [
+      
+    ],
+    "navigation": [
+      {
+        "group": "",
+        "pages": [
+          "home"
+        ]
+      },
+      
+      {
+        "group": "Getting Started",
+        "pages": [
+          "api-reference/introduction",
+          "api-reference/guide",
+          "api-reference/migration_guide",
+          "api-reference/error_code"
+        ]
+      },
+      
+      {
+        "group": "Public Data",
+        "pages": [
+          "api-reference/endpoint/public_data/systemInfo",
+          "api-reference/endpoint/public_data/instruments",
+          "api-reference/endpoint/public_data/token",
+          "api-reference/endpoint/public_data/tokenNetwork",
+          "api-reference/endpoint/public_data/tokenInfo",
+          "api-reference/endpoint/public_data/marketTrades",
+          "api-reference/endpoint/public_data/marketTradesHistory",
+          "api-reference/endpoint/public_data/orderbook",
+          "api-reference/endpoint/public_data/kline",
+          "api-reference/endpoint/public_data/klineHistory",
+          "api-reference/endpoint/public_data/futures",
+          "api-reference/endpoint/public_data/fundingRate",
+          "api-reference/endpoint/public_data/fundingRateHistory",
+          "api-reference/endpoint/public_data/insuranceFund"
+        ]
+      },
+      {
+        "group": "Trading",
+        "pages": [
+          "api-reference/endpoint/trading/post_order",
+          "api-reference/endpoint/trading/cancel_order",
+          "api-reference/endpoint/trading/cancel_all_order",
+          "api-reference/endpoint/trading/get_order",
+          "api-reference/endpoint/trading/get_orders",
+          "api-reference/endpoint/trading/edit_order",
+          "api-reference/endpoint/trading/post_algo_order",
+          "api-reference/endpoint/trading/cancel_algo_order",
+          "api-reference/endpoint/trading/cancel_algo_orders",
+          "api-reference/endpoint/trading/cancel_orders_by_symbol",
+          "api-reference/endpoint/trading/get_algo_order",
+          "api-reference/endpoint/trading/get_algo_orders",
+          "api-reference/endpoint/trading/edit_algo_order",
+          "api-reference/endpoint/trading/get_transaction",
+          "api-reference/endpoint/trading/get_transactions",
+          "api-reference/endpoint/trading/get_tradingFee",
+          "api-reference/endpoint/trading/cancel_all_after"
+        ]
+      },
+      {
+        "group": "Account",
+        "pages": [
+          "api-reference/endpoint/account/get_account_info",
+          "api-reference/endpoint/account/get_token_config",
+          "api-reference/endpoint/account/get_symbol_config",
+          "api-reference/endpoint/account/trading_mode",
+          "api-reference/endpoint/account/sub_accounts",
+          "api-reference/endpoint/account/summary",
+          "api-reference/endpoint/account/get_referral_reward_history",
+          "api-reference/endpoint/account/credentials",
+          "api-reference/endpoint/account/listen_key"
+          
+        ]
+      },
+      {
+        "group": "Assets",
+        "pages": [
+          "api-reference/endpoint/assets/get_balances",
+          "api-reference/endpoint/assets/token_history",
+          "api-reference/endpoint/assets/get_transfer_history",
+          "api-reference/endpoint/assets/transfer",
+          "api-reference/endpoint/assets/get_wallet_history",
+          "api-reference/endpoint/assets/wallet_withdraw",
+          "api-reference/endpoint/assets/get_wallet_deposit",
+          "api-reference/endpoint/assets/get_yield_history"
+          
+        ]
+      },
+      {
+        "group": "Futures",
+        "pages": [
+          "api-reference/endpoint/futures/get_positions",
+          "api-reference/endpoint/futures/get_leverage",
+          "api-reference/endpoint/futures/set_leverage",
+          "api-reference/endpoint/futures/position_mode",
+          "api-reference/endpoint/futures/defaultMarginMode",
+          "api-reference/endpoint/futures/get_fundingFee_history"
+          
+        ]
+      },
+      
+      
+      {
+        "group": "Spot Margin",
+        "pages": [
+          "api-reference/endpoint/spot_margin/set_leverage",
+          "api-reference/endpoint/spot_margin/get_interest_rate",
+          "api-reference/endpoint/spot_margin/get_interest_history",
+          "api-reference/endpoint/spot_margin/interest_repay",
+          "api-reference/endpoint/spot_margin/get_max_margin"
+        ]
+      },
+      {
+        "group": "Websocket Streams",
+        "pages": [
+          "api-reference/websocket_introduction",
+          {
+            "group": "Public Market Data",
+            "pages": [
+              "api-reference/endpoint/websocket/Orderbook_update",
+              "api-reference/endpoint/websocket/Orderbook_update_rpi",
+              "api-reference/endpoint/websocket/BBO",
+              "api-reference/endpoint/websocket/BBO_rpi",
+              "api-reference/endpoint/websocket/TRADE",
+              "api-reference/endpoint/websocket/TICKER",
+              "api-reference/endpoint/websocket/KLINE",
+              "api-reference/endpoint/websocket/INDEX_PRICE",
+              "api-reference/endpoint/websocket/MARKET_PRICE",
+              "api-reference/endpoint/websocket/FUNDING_RATE",
+              "api-reference/endpoint/websocket/OPEN_INTEREST"
+            ]
+          },
+          {
+            "group": "Private User Data",
+            "pages": [
+              "api-reference/endpoint/websocket/private/Account",
+              "api-reference/endpoint/websocket/private/Balance",
+              "api-reference/endpoint/websocket/private/Position",
+              "api-reference/endpoint/websocket/private/Execution_report",
+              "api-reference/endpoint/websocket/private/Algo_execution_report"
+              
+            ]
+          },
+          {
+            "group": "Commands",
+            "pages": [
+              "api-reference/endpoint/websocket/subscribe",
+              "api-reference/endpoint/websocket/Unsubscribe",
+              "api-reference/endpoint/websocket/Unsubscribe_all",
+              "api-reference/endpoint/websocket/List_subscription"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Introduction",
+        "pages": [
+          "troubleshooting/introduction"
+        ]
+      },
+      {
+        "group": "User Issues",
+        "pages": [
+          "troubleshooting/user-issues/deposit-issues"
+        ]
+      },
+      {
+        "group": "Updates by versions",
+        "pages": [
+          "changelog/release_note_v3",
+          "changelog/release_note_v1"
+        ]
+      },
+      {
+        "group": "",
+        "pages": [
+          "legacy-api-reference/introduction"
+        ]
+      }
+  
+    ],
+    "footerSocials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  }
+  

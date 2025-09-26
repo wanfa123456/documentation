@@ -1,0 +1,23 @@
+{
+    "get": {
+      "description": "Get Trading Fee",
+      "parameters": {
+        "$ref": "../../parameters/delOrder.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/GetTradingFeeResponse.json#/GetTradingFeeResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        
+      ]
+    }
+  }

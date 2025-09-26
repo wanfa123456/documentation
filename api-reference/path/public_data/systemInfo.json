@@ -1,0 +1,19 @@
+{
+	"get": {
+		"description": "Get current system maintenance status. A status value of 0 means the system is functioning properly, a status value of 1 means the trading services are under maintenance and a status value of 2 means the system is under maintenance.",
+		"parameters": [],
+		"responses": {
+			"200": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../../responses/SystemInfoResponse.json#/SystemInfoResponse"
+						}
+					}
+				}
+			}
+		},
+		"security": []
+	}
+}

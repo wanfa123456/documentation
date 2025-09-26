@@ -1,0 +1,18 @@
+{
+    "GetOrderResponse": {
+        "allOf": [
+            {
+                "$ref": "../common/commonResponse.json#/CommonResponse"
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "../responses/GetOrderRowResponse.json#/GetOrderRowResponse"
+                    }
+                }
+            }
+        ]
+    }
+}
+

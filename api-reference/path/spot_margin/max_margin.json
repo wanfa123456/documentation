@@ -1,0 +1,23 @@
+{
+    "get": {
+      "description": "Get max available margin for a given spot instrument.",
+      "parameters": {
+        "$ref": "../../parameters/maxMargin.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/GetMaxMarginResponse.json#/GetMaxMarginResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        
+      ]
+    }
+  }

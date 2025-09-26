@@ -1,0 +1,56 @@
+{
+    "parameters": [
+        {
+			"name": "x-api-key",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "abcdef123456"
+			},
+			"description": ""
+		  },
+		  {
+			"name": "x-api-signature",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "signaturestring"
+			},
+			"description": ""
+		  },
+		  {
+			"name": "x-api-timestamp",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "1718943200000"
+			},
+			"description": ""
+		  },
+      {
+        "name": "algoOrderId",
+        "in": "query",
+        "description": "Id of the algo order; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.",
+        "required": false,
+        "explode": true,
+        "schema": {
+            "type": "integer",
+            "default": 1
+        }
+    },
+    {
+        "name": "clientAlgoOrderId",
+        "in": "query",
+        "description": "Client order Id as assigned by the user; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.",
+        "required": false,
+        "explode": true,
+        "schema": {
+            "type": "integer",
+            "default": 1
+        }
+    }
+    ]
+}

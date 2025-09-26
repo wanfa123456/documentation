@@ -1,0 +1,47 @@
+---
+title: 'Balance'
+description: ''
+---
+
+
+### Topic: balance
+Push interval: push on update  
+Subscribe to balance updates.  Updates will be sent only when specific events occur, such as order executions, placements, or cancellations.  Updates will not be triggered by changes in the mark price.
+
+<ResponseExample>
+
+```bash
+{
+    "topic": "balance",
+    "ts": 1618757714353,
+    "data": {
+        "balances": [
+            {
+                "t": "BTC",                // token
+                "h": "100",                // holding
+                "f": "0",                  // frozen
+                "i": "0",                  // interest
+                "psq": "0",                // pending short qty
+                "plq": "0",                // pending long qty
+                "s": "0",                  // staked
+                "u": "0",                  // unbonding
+                "v": "50.5",               // vault
+                "l": "0",                  // launchpad vault
+                "e": "0",                  // earn
+                "aop": "0",                // average open price
+                "pnl": "0",                // 24h PnL
+                "roi": "0.01",             // 24h PnL percentage
+                "fee": "0",                // 24h fee
+                "mp": "50000",             // mark price
+                "ver": 0,                  // version
+                "b": "166",                // trial fund bonus
+                "lcr": 30,                 // loss cover ratio
+                "ts": 1618757713353        // timestamp of actual balance change
+            },
+            ...
+        ]
+    }
+}
+```
+
+</ResponseExample>

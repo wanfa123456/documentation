@@ -1,0 +1,31 @@
+{
+    "get": {
+      "description": "Get the token level configurations.",
+      "parameters": [
+          {
+            "$ref": "../../parameters/auth.json#/parameters/ApiKeyHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/SignatureHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/TimestampHeader"
+          }
+        ],  
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/TokenConfigResponse.json#/TokenConfigResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        
+      ]
+    }
+  }

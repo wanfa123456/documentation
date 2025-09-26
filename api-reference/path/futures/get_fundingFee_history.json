@@ -1,0 +1,23 @@
+{
+    "get": {
+      "description": "get funding fee history",
+      "parameters": {
+        "$ref": "../../parameters/getFundingFeeHistory.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/GetFundingFeeHistoryResponse.json#/GetFundingFeeHistoryResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    }
+  }

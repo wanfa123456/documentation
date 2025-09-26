@@ -1,0 +1,172 @@
+{
+    "get": {
+      "description": "get algo order",
+      "parameters": {
+        "$ref": "../../parameters/getAlgoOrder.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/GetAlgoOrderResponse.json#/GetAlgoOrderResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    },
+    "post": {
+      "description": "post algo order",
+      "parameters": [
+          {
+            "$ref": "../../parameters/auth.json#/parameters/ApiKeyHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/SignatureHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/TimestampHeader"
+          }
+        ],  
+      "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+                "oneOf": [
+                    {
+                        "$ref": "../../schemas/algo/stop_order.json#/stop_order"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/oco_order.json#/oco_order"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/trailing_stop.json#/trailing_stop"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/positional_tp_sl.json#/positional_tp_sl"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/tp_sl.json#/tp_sl"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/bracket.json#/bracket"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/stop_bracket.json#/stop_bracket"
+                    }
+                ]
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                    {
+                        "$ref": "../../responses/algo/stopResponse.json#/StopResponse"
+                    }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    },
+    "put": {
+      "description": "edit algo order",
+      "parameters": [
+          {
+            "$ref": "../../parameters/auth.json#/parameters/ApiKeyHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/SignatureHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/TimestampHeader"
+          }
+        ],  
+      "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                    {
+                        "$ref": "../../schemas/algo/edit/stop_order.json#/stop_order"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/edit/oco_order.json#/oco_order"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/edit/trailing_stop.json#/trailing_stop"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/edit/positional_tp_sl.json#/positional_tp_sl"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/edit/tp_sl.json#/tp_sl"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/edit/bracket.json#/bracket"
+                    },
+                    {
+                        "$ref": "../../schemas/algo/edit/stop_bracket.json#/stop_bracket"
+                    }
+                ]
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/EditOrderResponse.json#/EditOrderResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    },
+    "delete": {
+      "description": "cancel algo order",
+      "parameters": {
+        "$ref": "../../parameters/delAlgoOrder.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/CancelOrderResponse.json#/CancelOrderResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    }
+  }

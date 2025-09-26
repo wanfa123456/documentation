@@ -1,0 +1,15 @@
+{
+    "GetListenKey": {
+        "required": [
+            "type"
+        ],
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string",
+                "description": "WEBSOCKET",
+                "example": "WEBSOCKET"
+            }
+        }
+    }
+}

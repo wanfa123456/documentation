@@ -1,0 +1,30 @@
+{
+	"get": {
+		"description": "Retrieve spot token information.",
+		"parameters": [
+			{
+				"name": "token",
+				"in": "query",
+				"description": "Token name in upper case",
+				"required": false,
+				"explode": true,
+				"schema": {
+					"type": "string"
+				}
+			}
+		],
+		"responses": {
+			"200": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../../responses/TokenInfoResponse.json#/TokenInfoResponse"
+						}
+					}
+				}
+			}
+		},
+		"security": []
+	}
+}

@@ -1,0 +1,48 @@
+{
+    "CreateOrderResponse": {
+        "allOf": [
+            {
+                "$ref": "../common/commonResponse.json#/CommonResponse"
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "orderId": {
+                                "type": "integer",
+                                "description": ""
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": ""
+                            },
+                            "price": {
+                                "type": "string",
+                                "description": ""
+                            },
+                            "quantity": {
+                                "type": "string",
+                                "description": ""
+                            },
+                            "amount": {
+                                "type": "string",
+                                "description": ""
+                            },
+                            "clientOrderId": {
+                                "type": "integer",
+                                "description": ""
+                            },
+                            "bidAskLevel": {
+                                "type": "integer",
+                                "description": ""
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
+

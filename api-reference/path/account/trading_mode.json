@@ -1,0 +1,42 @@
+{
+    "post": {
+      "description": "Set account trading mode",
+      "parameters": [
+          {
+            "$ref": "../../parameters/auth.json#/parameters/ApiKeyHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/SignatureHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/TimestampHeader"
+          }
+        ],  
+      "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../schemas/SetTradingMode.json#/SetTradingMode"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../common/commonResponse.json#/CommonResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    }
+  }

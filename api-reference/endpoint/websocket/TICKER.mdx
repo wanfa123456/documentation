@@ -1,0 +1,37 @@
+---
+title: 'Ticker'
+description: ''
+---
+
+
+### Topic: ticker@`{symbol}`
+Push interval: 1s  
+Subscribe to 24h ticker for a given symbol.
+
+
+<ResponseExample>
+
+```bash
+{
+    "topic": "ticker@SPOT_WOO_USDT",
+    "ts": 1614152270000,
+    "data": {
+        "s": "SPOT_WOO_USDT",  // symbol
+        "o": "0.16112",        // open
+        "c": "0.32206",        // close
+        "h": "0.33000",        // high
+        "l": "0.14251",        // low
+        "v": "89040821.98",    // volume in base token
+        "a": "22493062.21",    // amount in USDT
+        "q": "89040821.98",    // aggregated volume in base token
+        "u": "22493062.21",    // aggregated amount in USDT
+        "cnt": 15442,          // trade count
+        "ts": 1614152260000    // ticker generation time
+        "tts": 1614152250000   // last trade time
+    }
+}
+```
+
+</ResponseExample>
+
+

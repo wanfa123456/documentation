@@ -1,0 +1,57 @@
+{
+  "get": {
+    "description": "get account level default margin mode",
+    "parameters": {
+      "$ref": "../../parameters/defaultMarginMode.json#/parameters"
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../responses/DefaultMarginModeResponse.json#/DefaultMarginModeResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      
+    ]
+  },
+  "put": {
+    "description": "set account level default margin mode",
+    
+    "requestBody": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../schemas/SetAccountMarginMode.json#/SetAccountMarginMode"
+            }
+          }
+        },
+        "required": true
+      },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../common/commonResponse.json#/CommonResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "ApiKeyAuth": [],
+        "ApiSignAuth": [],
+        "ApiTimestampAuth": []
+      }
+    ]
+  }
+}

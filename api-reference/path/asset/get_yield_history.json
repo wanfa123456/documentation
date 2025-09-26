@@ -1,0 +1,23 @@
+{
+    "get": {
+      "description": "Get Staking Yield History",
+      "parameters": {
+        "$ref": "../../parameters/get_yield_history.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/YieldHistoryResponse.json#/YieldHistoryResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    }
+  }

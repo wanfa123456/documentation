@@ -1,0 +1,58 @@
+---
+title: 'Get referral reward history'
+openapi: 'GET /v3/account/referral/rewardHistory'
+---
+**Limit 10 requests per 60 seconds**  
+
+
+
+<ResponseExample>
+
+```bash
+{
+    "success": true,
+    "data": {
+        "rows": [
+            {
+                "referralId": 12509,
+                "registerTime": "1643076873.484",
+                "referralCode": "OJEDSSMU",
+                "tradeStatus": "Traded",
+                "earned": [
+                  {
+                    "token": "WOO",
+                    "amount": "144.78597143"
+                  },
+                  {
+                    "token": "USDT",
+                    "amount": "0"
+                  }
+                ],
+                "extraBonus": [
+                  {
+                    "token": "WOO",
+                    "amount" : "10"
+                  }
+                ],
+                "previousCommission": [
+                  {
+                    "token": "WOO",
+                    "totalAmount": "10.07981438"
+                  }
+                ]
+                "email": "staking-005_mas@woo.network",
+            }
+            ...
+        ],
+        "meta": {
+            "total": 46,
+            "recordsPerPage": 1,
+            "currentPage": 1
+        }
+    },
+    "timestamp": 1690192103430
+}
+
+```
+
+</ResponseExample>

@@ -1,0 +1,59 @@
+{
+	"FundingRateResponse": {
+		"allOf": [
+			{
+				"$ref": "../common/commonResponse.json#/CommonResponse"
+			},
+			{
+				"type": "object",
+				"properties": {
+					"data": {
+						"type": "object",
+						"properties": {
+							"rows": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"symbol": {
+											"type": "string",
+											"description": ""
+										},
+										"estFundingRate": {
+											"type": "string",
+											"description": ""
+										},
+										"estFundingRateTimestamp": {
+											"type": "number",
+											"description": ""
+										},
+										"lastFundingRate": {
+											"type": "string",
+											"description": ""
+										},
+										"lastFundingRateTimestamp": {
+											"type": "number",
+											"description": ""
+										},
+										"nextFundingTime": {
+											"type": "number",
+											"description": ""
+										},
+										"lastFundingIntervalHours": {
+											"type": "number",
+											"description": ""
+										},
+										"estFundingIntervalHours": {
+											"type": "number",
+											"description": ""
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}

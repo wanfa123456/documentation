@@ -1,0 +1,23 @@
+{
+    "get": {
+      "description": "Get transaction history (in the past 2 years) ",
+      "parameters": {
+        "$ref": "../../parameters/getTransactions.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/GetTransactionsResponse.json#/GetTransactionsResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    }
+  }

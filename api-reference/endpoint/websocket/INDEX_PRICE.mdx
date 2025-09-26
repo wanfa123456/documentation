@@ -1,0 +1,30 @@
+---
+title: 'Index price'
+description: ''
+---
+
+### Topic: indexprice@`{symbol}`
+Push interval: 1s  
+Subscribe to the index price of the symbol.  
+
+
+
+
+
+<ResponseExample>
+
+```bash
+{
+    "topic": "indexprice@SPOT_ETH_USDT",
+    "ts": 1618820361552,
+    "data": {
+        "s": "SPOT_ETH_USDT", // symbol
+        "px": "3987.1",       // index price
+        "ts": 1618820361552   // timestamp at which the index price was calculated
+    }
+}
+```
+
+</ResponseExample>
+
+

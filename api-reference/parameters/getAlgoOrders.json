@@ -1,0 +1,170 @@
+{
+    "parameters": [
+        {
+			"name": "x-api-key",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "abcdef123456"
+			},
+			"description": ""
+		  },
+		  {
+			"name": "x-api-signature",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "signaturestring"
+			},
+			"description": ""
+		  },
+		  {
+			"name": "x-api-timestamp",
+			"in": "header",
+			"required": true,
+			"schema": {
+			  "type": "string",
+			  "example": "1718943200000"
+			},
+			"description": ""
+		  },
+          {
+            "name": "symbol",
+            "in": "query",
+            "description": "Symbol name",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "side",
+            "in": "query",
+            "description": "BUY/SELL",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "positionSide",
+            "in": "query",
+            "description": "BOTH for one way mode; LONG or SHORT for hedge mode; Only applicable to perpetual instruments",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "algoType",
+            "in": "query",
+            "description": "STOP/OCO/TRAILING_STOP/POSITIONAL_TP_SL/TP_SL/BRACKET/STOP_BRACKET",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderType",
+            "in": "query",
+            "description": "LIMIT/MARKET",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isTriggered",
+            "in": "query",
+            "description": "true/false",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": ["true", "false"]
+            }
+          },
+          {
+            "name": "algoOrderTag",
+            "in": "query",
+            "description": "Order tag",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "realizedPnl",
+            "in": "query",
+            "description": "Whether to return order’s realized pnl",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "NEW/CANCELLED/PARTIAL_FILLED/FILLED/REJECTED/INCOMPLETE/COMPLETED",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "Start timestamp in Unix timestamp format in milliseconds",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "End timestamp in Unix timestamp format in milliseconds",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Data size per page, max 500",
+            "required": false,
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 50,
+              "maximum": 500
+            }
+          }
+    ]
+}

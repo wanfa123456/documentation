@@ -1,0 +1,52 @@
+{
+	"get": {
+		"description": "Get the snapshot of the symbol order book. Price of asks/bids are in descending order.",
+		"parameters": [
+			{
+				"name": "symbol",
+				"in": "query",
+				"description": "Symbol name",
+				"required": true,
+				"explode": true,
+				"schema": {
+					"type": "string"
+				}
+			},
+			{
+				"name": "maxLevel",
+				"in": "query",
+				"description": "Maximum number of levels to show on both sides",
+				"required": false,
+				"explode": true,
+				"schema": {
+					"type": "integer",
+					"default": 100
+				}
+			},
+			{
+				"name": "rpi",
+				"in": "query",
+				"description": "Options are True/False, default is False.  If set to true, fetch the order book snapshot including both non-RPI and RPI orders.",
+				"required": false,
+				"explode": true,
+				"schema": {
+					"type": "boolean",
+					"default": false
+				}
+			}
+		],
+		"responses": {
+			"200": {
+				"description": "",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "../../responses/OrderbookResponse.json#/OrderbookResponse"
+						}
+					}
+				}
+			}
+		},
+		"security": []
+	}
+}

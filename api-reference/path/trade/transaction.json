@@ -1,0 +1,23 @@
+{
+    "get": {
+      "description": "get transaction by trade id (last 3 months)",
+      "parameters": {
+        "$ref": "../../parameters/getTransaction.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/GetTransactionResponse.json#/GetTransactionResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    }
+  }

@@ -1,0 +1,42 @@
+{
+    "post": {
+      "description": "reset account level default margin mode",
+      "parameters": [
+          {
+            "$ref": "../../parameters/auth.json#/parameters/ApiKeyHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/SignatureHeader"
+          },
+          {
+            "$ref": "../../parameters/auth.json#/parameters/TimestampHeader"
+          }
+        ],  
+      "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                
+              }
+            }
+          },
+          "required": true
+        },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../common/commonResponse.json#/CommonResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+       
+      ]
+    }
+  }

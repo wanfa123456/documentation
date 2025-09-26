@@ -1,0 +1,5246 @@
+openapi: 3.0.2
+info:
+  title: Swagger Petstore - OpenAPI 3.0
+  description: |-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
+    Swagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
+    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
+
+    Some useful links:
+    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
+    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: API Team
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.19
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://api.woox.io/
+paths:
+  /v3/public/systemInfo:
+    get:
+      description: Get current system maintenance status. A status value of 0 means the system is functioning properly, a status value of 1 means the trading services are under maintenance and a status value of 2 means the system is under maintenance.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemInfoResponse'
+      security: []
+  /v3/public/instruments:
+    get:
+      description: Retrieve a list of Spot and USDT perpetual instruments.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: false
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstrumentsResponse'
+      security: []
+  /v3/public/token:
+    get:
+      description: Get the available tokens that WOO X supports.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+      security: []
+  /v3/public/tokenNetwork:
+    get:
+      description: Get the available networks for each token as well as the deposit/withdrawal information.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenNetworkResponse'
+      security: []
+  /v3/public/tokenInfo:
+    get:
+      description: Retrieve spot token information.
+      parameters:
+        - name: token
+          in: query
+          description: Token name in upper case
+          required: false
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenInfoResponse'
+      security: []
+  /v3/public/marketTrades:
+    get:
+      description: Get the latest market trades. In the response, a source of 1 means these are internal trades on WOO X and a source of 0 means they are external trades from aggregated sources.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Numbers of trades you want to query. Maximum of 1000 trades allowed.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketTradesResponse'
+      security: []
+  /v3/public/marketTradesHistory:
+    get:
+      description: Get historical market trades data. In the response, a source of 1 means these are internal trades on WOO X and a source of 0 means they are external trades from aggregated sources.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: The id cursor for fetching the previous page of results, excluding the trade associated with the cursor itself.  Either before or after can be specified.  If both are provided, before takes precedence. If neither is passed, the results default to starting from the most recent trades.
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: after
+          in: query
+          description: The id cursor for fetching the next page of results, excluding the trade associated with the cursor itself.  Either before or after can be specified.  If both are provided, before takes precedence. If neither is passed, the results default to starting from the most recent trades.
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Numbers of trades you want to query. Maximum of 1000 trades allowed.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 100
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketTradesHistoryResponse'
+      security: []
+  /v3/public/orderbook:
+    get:
+      description: Get the snapshot of the symbol order book. Price of asks/bids are in descending order.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: maxLevel
+          in: query
+          description: Maximum number of levels to show on both sides
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 100
+        - name: rpi
+          in: query
+          description: Options are True/False, default is False.  If set to true, fetch the order book snapshot including both non-RPI and RPI orders.
+          required: false
+          explode: true
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderbookResponse'
+      security: []
+  /v3/public/kline:
+    get:
+      description: Get the latest klines of the trading instrument.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 1m/3m/5m/15m/30m/1h/2h/4h/6h/12h/1d/1w/1mon/1y
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Numbers of klines. Maximum of 1000 klines allowed.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 100
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KlineResponse'
+      security: []
+  /v3/public/klineHistory:
+    get:
+      description: Get the historical klines of the trading instrument.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 1m/3m/5m/15m/30m/1h/2h/4h/6h/12h/1d/1w/1mon/1y
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: The start timestamp cursor for fetching the previous page of results, excluding the kline associated with the cursor itself.  Either before or after can be specified.  If both are provided, before takes precedence. If neither is passed, the results default to starting from the most recent kline.
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: after
+          in: query
+          description: The start timestamp cursor for fetching the next page of results, excluding the kline associated with the cursor itself.  Either before or after can be specified.  If both are provided, before takes precedence. If neither is passed, the results default to starting from the most recent kline.
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Numbers of klines you want to query. Maximum of 1000 klines allowed.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 100
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KlineHistoryResponse'
+      security: []
+  /v3/public/fundingRate:
+    get:
+      description: Get predicted funding rate and the latest funding rate.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: false
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundingRateResponse'
+      security: []
+  /v3/public/fundingRateHistory:
+    get:
+      description: Get funding rate history for one market.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: startTime
+          in: query
+          description: Start timestamp in Unix timestamp format in milliseconds
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: endTime
+          in: query
+          description: End timestamp in Unix timestamp format in milliseconds
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          description: Data size per page
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 25
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundingRateHistoryResponse'
+      security: []
+  /v3/public/futures:
+    get:
+      description: Get basic futures information for all the markets.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: false
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FuturesResponse'
+      security: []
+  /v3/public/insuranceFund:
+    get:
+      description: Get the insurance fund balance by perp contract.
+      parameters:
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceFundResponse'
+      security: []
+  /v3/trade/order:
+    get:
+      description: get order
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: orderId
+          in: query
+          description: Id of the order; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: clientOrderId
+          in: query
+          description: Client order Id as assigned by the user; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: withRealizedPnl
+          in: query
+          description: Whether to return order’s realized pnl; Note that realized PnL is only calculated for Perpetual close orders.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrderResponse'
+      security: []
+    post:
+      description: post order
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrderResponse'
+      security: []
+    put:
+      description: edit order
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditOrder'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditOrderResponse'
+      security: []
+    delete:
+      description: cancel order
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: SPOT_BTC_USDT
+        - name: orderId
+          in: query
+          description: Id of the order; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: clientOrderId
+          in: query
+          description: Client order Id as assigned by the user; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+  /v3/trade/orders:
+    get:
+      description: get orders
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: side
+          in: query
+          description: BUY/SELL
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: positionSide
+          in: query
+          description: BOTH for one way mode; LONG or SHORT for hedge mode; Only applicable to perpetual instruments
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: LIMIT/MARKET/IOC/FOK/POST_ONLY/LIQUIDATE/RPI
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: orderTag
+          in: query
+          description: Order tag
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: withRealizedPnl
+          in: query
+          description: Whether to return order’s realized pnl; Note that realized PnL is only calculated for Perpetual close orders.
+          required: false
+          explode: true
+          schema:
+            type: boolean
+        - name: status
+          in: query
+          description: NEW/CANCELLED/PARTIAL_FILLED/FILLED/REJECTED/INCOMPLETE/COMPLETED
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: startTime
+          in: query
+          description: Start timestamp in Unix timestamp format in milliseconds
+          required: false
+          explode: true
+          schema:
+            type: integer
+            format: int64
+        - name: endTime
+          in: query
+          description: End timestamp in Unix timestamp format in milliseconds
+          required: false
+          explode: true
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          description: Data size per page, max 500
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 50
+            maximum: 500
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrdersResponse'
+      security: []
+    delete:
+      description: Cancel multiple orders
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: SPOT_BTC_USDT
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+  /v3/trade/algoOrder:
+    get:
+      description: get algo order
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: algoOrderId
+          in: query
+          description: Id of the algo order; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: clientAlgoOrderId
+          in: query
+          description: Client order Id as assigned by the user; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAlgoOrderResponse'
+      security: []
+    post:
+      description: post algo order
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/stop_order_stop_order'
+                - $ref: '#/components/schemas/oco_order_oco_order'
+                - $ref: '#/components/schemas/trailing_stop_trailing_stop'
+                - $ref: '#/components/schemas/positional_tp_sl_positional_tp_sl'
+                - $ref: '#/components/schemas/tp_sl_tp_sl'
+                - $ref: '#/components/schemas/bracket_bracket'
+                - $ref: '#/components/schemas/stop_bracket_stop_bracket'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/StopResponse'
+      security: []
+    put:
+      description: edit algo order
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/stop_order'
+                - $ref: '#/components/schemas/oco_order'
+                - $ref: '#/components/schemas/trailing_stop'
+                - $ref: '#/components/schemas/positional_tp_sl'
+                - $ref: '#/components/schemas/tp_sl'
+                - $ref: '#/components/schemas/bracket'
+                - $ref: '#/components/schemas/stop_bracket'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditOrderResponse'
+      security: []
+    delete:
+      description: cancel algo order
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: algoOrderId
+          in: query
+          description: Id of the algo order; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: clientAlgoOrderId
+          in: query
+          description: Client order Id as assigned by the user; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+  /v3/trade/algoOrders:
+    get:
+      description: get algo orders
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: side
+          in: query
+          description: BUY/SELL
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: positionSide
+          in: query
+          description: BOTH for one way mode; LONG or SHORT for hedge mode; Only applicable to perpetual instruments
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: algoType
+          in: query
+          description: STOP/OCO/TRAILING_STOP/POSITIONAL_TP_SL/TP_SL/BRACKET/STOP_BRACKET
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: orderType
+          in: query
+          description: LIMIT/MARKET
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: isTriggered
+          in: query
+          description: true/false
+          required: false
+          explode: true
+          schema:
+            type: string
+            enum:
+              - 'true'
+              - 'false'
+        - name: algoOrderTag
+          in: query
+          description: Order tag
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: realizedPnl
+          in: query
+          description: Whether to return order’s realized pnl
+          required: false
+          explode: true
+          schema:
+            type: boolean
+        - name: status
+          in: query
+          description: NEW/CANCELLED/PARTIAL_FILLED/FILLED/REJECTED/INCOMPLETE/COMPLETED
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: startTime
+          in: query
+          description: Start timestamp in Unix timestamp format in milliseconds
+          required: false
+          explode: true
+          schema:
+            type: integer
+            format: int64
+        - name: endTime
+          in: query
+          description: End timestamp in Unix timestamp format in milliseconds
+          required: false
+          explode: true
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          description: Data size per page, max 500
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 50
+            maximum: 500
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAlgoOrdersResponse'
+      security: []
+    post:
+      description: post algo order
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/stop_order_stop_order'
+                - $ref: '#/components/schemas/oco_order_oco_order'
+                - $ref: '#/components/schemas/trailing_stop_trailing_stop'
+                - $ref: '#/components/schemas/positional_tp_sl_positional_tp_sl'
+                - $ref: '#/components/schemas/tp_sl_tp_sl'
+                - $ref: '#/components/schemas/bracket_bracket'
+                - $ref: '#/components/schemas/stop_bracket_stop_bracket'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/StopResponse'
+        '400':
+          description: Invalid status value
+      security: []
+    put:
+      description: edit order
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditOrder'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditOrderResponse'
+        '400':
+          description: Invalid status value
+      security: []
+    delete:
+      description: cancel multiple algo orders
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: algoOrderId
+          in: query
+          description: Id of the algo order; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: clientAlgoOrderId
+          in: query
+          description: Client order Id as assigned by the user; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+  /v3/trade/allOrders:
+    post:
+      description: post algo order
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/stop_order_stop_order'
+                - $ref: '#/components/schemas/oco_order_oco_order'
+                - $ref: '#/components/schemas/trailing_stop_trailing_stop'
+                - $ref: '#/components/schemas/positional_tp_sl_positional_tp_sl'
+                - $ref: '#/components/schemas/tp_sl_tp_sl'
+                - $ref: '#/components/schemas/bracket_bracket'
+                - $ref: '#/components/schemas/stop_bracket_stop_bracket'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/StopResponse'
+        '400':
+          description: Invalid status value
+      security: []
+    put:
+      description: edit order
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditOrder'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditOrderResponse'
+      security: []
+    delete:
+      description: Cancel all orders by symbol
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: SPOT_BTC_USDT
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+  /v3/trade/transaction:
+    get:
+      description: get transaction by trade id (last 3 months)
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: tradeId
+          in: query
+          description: Id of the transaction; Either tradeId or clientOrderId is required. If both are passed, tradeId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransactionResponse'
+      security: []
+  /v3/trade/transactionHistory:
+    get:
+      description: 'Get transaction history (in the past 2 years) '
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: startTime
+          in: query
+          description: Start timestamp in Unix timestamp format in milliseconds
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: endTime
+          in: query
+          description: End timestamp in Unix timestamp format in milliseconds
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: fromId
+          in: query
+          description: Trade Id to search from
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Number of results per request
+          required: false
+          explode: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransactionsResponse'
+      security: []
+  /v3/trade/tradingFee:
+    get:
+      description: Get Trading Fee
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+            default: SPOT_BTC_USDT
+        - name: orderId
+          in: query
+          description: Id of the order; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: clientOrderId
+          in: query
+          description: Client order Id as assigned by the user; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTradingFeeResponse'
+      security: []
+  /v3/trade/cancelAllAfter:
+    post:
+      description: Cancel all after
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAllAfter'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelAllAfterResponse'
+      security: []
+  /v3/account/referral/summary:
+    get:
+      description: Get referral information from each user you has referred
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: startTime
+          in: query
+          description: start time in unix timestamp
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: endTime
+          in: query
+          description: end time in unix timestamp
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: the page you wish to query.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          description: the page size you wish to query, default = 25, 1000 at max.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 25
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferralResponse'
+      security: []
+  /v3/account/referral/rewardHistory:
+    get:
+      description: Get referral information from each user you has referred.
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: startTime
+          in: query
+          description: start time in unix timestamp
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: endTime
+          in: query
+          description: end time in unix timestamp
+          required: false
+          explode: true
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: the page you wish to query.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          description: the page size you wish to query, default = 25, 1000 at max.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 25
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferralResponse'
+      security: []
+  /v3/account/tokenConfig:
+    get:
+      description: Get the token level configurations.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenConfigResponse'
+      security: []
+  /v3/account/symbolConfig:
+    get:
+      description: Get the symbol level configurations.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SymbolConfigResponse'
+      security: []
+  /v3/account/info:
+    get:
+      description: Get the account information.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInfoResponse'
+      security: []
+  /v3/account/tradingMode:
+    post:
+      description: Set account trading mode
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetTradingMode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+  /v3/account/credentials:
+    get:
+      description: Get account api key permission
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: page
+          in: query
+          description: the page you wish to query.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          description: the page size you wish to query, default = 25, 1000 at max.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 25
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialsResponse'
+      security: []
+  /v3/account/subAccounts/all:
+    get:
+      description: Get account api key permission
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubAccountsResponse'
+      security: []
+  /v3/account/listenKey:
+    post:
+      description: get account listen key
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetListenKey'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListenKeyResponse'
+      security: []
+  /v3/spotMargin/leverage:
+    post:
+      description: set leverage
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLeverage'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+  /v3/spotMargin/interestRate:
+    get:
+      description: Get spot margin interest rate
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestRateResponse'
+      security: []
+  /v3/spotMargin/interestHistory:
+    get:
+      description: get spot margin interest history
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: token
+          in: query
+          description: Token name in upper case
+          required: true
+          schema:
+            type: string
+        - name: side
+          in: query
+          description: LOAN/REPAY/AUTO_REPAY
+          required: false
+          schema:
+            type: string
+        - name: startTime
+          in: query
+          description: Start timestamp in Unix timestamp format in milliseconds
+          required: false
+          schema:
+            type: integer
+        - name: endTime
+          in: query
+          description: End timestamp in Unix timestamp format in milliseconds
+          required: false
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+        - name: size
+          in: query
+          description: Data size per page
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInterestHistoryResponse'
+      security: []
+  /v3/spotMargin/interestRepay:
+    post:
+      description: Repay your margin interest.
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterestRepay'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+  /v3/spotMargin/maxMargin:
+    get:
+      description: Get max available margin for a given spot instrument.
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name, applicable to spot instruments only
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMaxMarginResponse'
+      security: []
+  /v3/asset/token/history:
+    get:
+      description: get token history
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: type
+          in: query
+          description: 'WITHDRAW/DEPOSIT/FIAT_WITHDRAW/FIAT_DEPOSIT/EARN/VAULT_WITHDRAW/VAULT_DEPOSIT/YIELD_TO_BALANCE/CREDIT/DISTRIBUTION/REFERRAL/SUB_ACCOUNT_TRANSFER/REBATE/LIQUIDATION/SPECIAL/STAKING/UNSTAKING/UNSTAKING_FEE/INTEREST/CONVERT/FUNDING_FEE/REALIZED_PNL/RFQ/ COPY_FEE / COPY_PROFIT_SHARED /SPOT_TRANSACTION / TRANSACTION_FEE '
+          required: false
+          explode: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/start_filter'
+        - $ref: '#/components/parameters/end_filter'
+        - $ref: '#/components/parameters/page_filter'
+        - $ref: '#/components/parameters/size_filter'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenHistoryResponse'
+      security: []
+  /v3/asset/transfer/history:
+    get:
+      description: Get Transfer History
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - $ref: '#/components/parameters/start_filter'
+        - $ref: '#/components/parameters/end_filter'
+        - $ref: '#/components/parameters/page_filter'
+        - $ref: '#/components/parameters/size_filter'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferHistoryResponse'
+      security: []
+  /v3/asset/transfer:
+    post:
+      description: transfer assets
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transfer'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+      security: []
+  /v3/asset/wallet/history:
+    get:
+      description: Get Wallet History
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: id
+          in: query
+          description: use when query specific transaction id (the result of withdrawal or internal transfer.)
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: network
+          in: query
+          description: network name you want to search (from /v1/public/token)
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: token
+          in: query
+          description: 'token name you want to search '
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: BALANCE/COLLATERAL
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: tokenSide
+          in: query
+          description: DEPOSIT/WITHDRAW
+          required: false
+          explode: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: NEW/CONFIRMING/PROCESSING/COMPLETED/CANCELED
+          required: false
+          explode: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/start_filter'
+        - $ref: '#/components/parameters/end_filter'
+        - $ref: '#/components/parameters/page_filter'
+        - $ref: '#/components/parameters/size_filter'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletHistoryResponse'
+      security: []
+  /v3/asset/wallet/deposit:
+    get:
+      description: Get Token Deposit Address
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: token
+          in: query
+          description: 'token name you want to search '
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: network
+          in: query
+          description: network name you want to search (from /v3/public/token)
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDepositResponse'
+      security: []
+  /v3/asset/wallet/withdraw/{withdrawId}:
+    delete:
+      description: Cancel Withdraw Request
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: withdrawId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the withdrawal request to be canceled.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+  /v3/asset/wallet/withdraw:
+    post:
+      description: withdraw assets
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Withdraw'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawResponse'
+      security: []
+  /v3/asset/staking/yieldHistory:
+    get:
+      description: Get Staking Yield History
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: token
+          in: query
+          description: Token name in upper case
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: the page you wish to query.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 1
+        - name: size
+          in: query
+          description: the page size you wish to query, default = 25, 1000 at max.
+          required: false
+          explode: true
+          schema:
+            type: integer
+            default: 25
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YieldHistoryResponse'
+      security: []
+  /v3/asset/balances:
+    get:
+      description: Get balances
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: token
+          in: query
+          description: Token to query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBalancesResponse'
+      security: []
+  /v3/futures/defaultMarginMode:
+    get:
+      description: get account level default margin mode
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: ''
+          required: false
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultMarginModeResponse'
+      security: []
+    put:
+      description: set account level default margin mode
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAccountMarginMode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security:
+        - ApiKeyAuth: []
+          ApiSignAuth: []
+          ApiTimestampAuth: []
+  /v3/futures/defaultMarginMode/{symbol}:
+    put:
+      description: set account level default margin mode
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ''
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAccountMarginMode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security:
+        - ApiKeyAuth: []
+          ApiSignAuth: []
+          ApiTimestampAuth: []
+  /v3/futures/defaultMarginMode/reset:
+    post:
+      description: reset account level default margin mode
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema: {}
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+  /v3/futures/leverage:
+    get:
+      description: get account leverage
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: marginMode
+          in: query
+          description: 'values: CROSS | ISOLATED'
+          required: true
+          explode: true
+          schema:
+            type: string
+        - name: positionMode
+          in: query
+          description: 'values: ONE_WAY | HEDGE_MODE'
+          required: true
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeverageResponse'
+      security: []
+    put:
+      description: set account leverage
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetFuturesLeverage'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+  /v3/isolatedMargin/margin:
+    post:
+      description: Adjust Isolated Margin
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdjustMargin'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+  /v3/futures/fundingFee/history:
+    get:
+      description: get funding fee history
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          schema:
+            type: string
+        - name: startTime
+          in: query
+          description: Start timestamp in Unix timestamp format in milliseconds
+          required: false
+          schema:
+            type: integer
+        - name: endTime
+          in: query
+          description: End timestamp in Unix timestamp format in milliseconds
+          required: false
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+        - name: size
+          in: query
+          description: Data size per page, max 500
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFundingFeeHistoryResponse'
+      security: []
+  /v3/futures/positions:
+    get:
+      description: get positions
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          schema:
+            type: string
+            example: abcdef123456
+          description: ''
+        - name: x-api-signature
+          in: header
+          required: true
+          schema:
+            type: string
+            example: signaturestring
+          description: ''
+        - name: x-api-timestamp
+          in: header
+          required: true
+          schema:
+            type: string
+            example: '1718943200000'
+          description: ''
+        - name: symbol
+          in: query
+          description: Symbol name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPositionsResponse'
+      security: []
+  /v3/futures/positionMode:
+    put:
+      description: Set position mode
+      parameters:
+        - $ref: '#/components/parameters/ApiKeyHeader'
+        - $ref: '#/components/parameters/SignatureHeader'
+        - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PositionMode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    api_key:
+      type: apiKey
+      name: api_keyqq
+      in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    ApiSignAuth:
+      type: apiKey
+      in: header
+      name: x-api-signature
+    ApiTimestampAuth:
+      type: apiKey
+      in: header
+      name: x-api-timestamp
+  schemas:
+    CommonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 'true'
+        timestamp:
+          type: integer
+          description: timestamp
+    SystemInfoResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  description: ''
+                msg:
+                  type: string
+                  description: ''
+                estimatedEndTime:
+                  type: integer
+                  description: ''
+    InstrumentsResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        description: ''
+                      status:
+                        type: string
+                        description: TRADING, SUSPENDED, TESTING
+                      baseAsset:
+                        type: string
+                        description: ''
+                      baseAssetMultiplier:
+                        type: number
+                        description: ''
+                      quoteAsset:
+                        type: string
+                        description: ''
+                      quoteMin:
+                        type: number
+                        description: ''
+                      quoteMax:
+                        type: number
+                        description: ''
+                      quoteTick:
+                        type: number
+                        description: ''
+                      baseMin:
+                        type: number
+                        description: ''
+                      baseMax:
+                        type: number
+                        description: ''
+                      baseTick:
+                        type: number
+                        description: ''
+                      minNotional:
+                        type: number
+                        description: ''
+                      bidCapRatio:
+                        type: number
+                        description: ''
+                      bidFloorRatio:
+                        type: number
+                        description: ''
+                      askCapRatio:
+                        type: number
+                        description: ''
+                      askFloorRatio:
+                        type: number
+                        description: ''
+                      fundingIntervalHours:
+                        type: number
+                        description: ''
+                      fundingCap:
+                        type: number
+                        description: ''
+                      fundingFloor:
+                        type: number
+                        description: ''
+                      orderMode:
+                        type: string
+                        description: NORMAL, POST_ONLY, REDUCE_ONLY, CANCEL_ONLY
+                      baseIMR:
+                        type: number
+                        description: ''
+                      baseMMR:
+                        type: number
+                        description: ''
+                      isAllowedRpi:
+                        type: boolean
+                        description: 'indicate whether RPI is enabled for the symbol '
+    TokenResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: ''
+                      fullname:
+                        type: string
+                        description: ''
+                      decimals:
+                        type: number
+                        description: ''
+                      network:
+                        type: string
+                        description: ''
+    TokenNetworkResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      protocol:
+                        type: string
+                        description: ''
+                      network:
+                        type: string
+                        description: ''
+                      token:
+                        type: string
+                        description: ''
+                      name:
+                        type: string
+                        description: ''
+                      minimumWithdrawal:
+                        type: number
+                        description: ''
+                      withdrawalFee:
+                        type: number
+                        description: ''
+                      allowDeposit:
+                        type: number
+                        description: ''
+                      allowWithdraw:
+                        type: number
+                        description: ''
+    TokenInfoResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: ''
+                      delisted:
+                        type: number
+                        description: ''
+                      canCollateral:
+                        type: boolean
+                        description: ''
+                      canShort:
+                        type: boolean
+                        description: ''
+    MarketTradesResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        description: ''
+                      side:
+                        type: string
+                        description: ''
+                      source:
+                        type: number
+                        description: ''
+                      executedPrice:
+                        type: string
+                        description: ''
+                      executedQuantity:
+                        type: string
+                        description: ''
+                      executedTimestamp:
+                        type: number
+                        description: ''
+                      rpi:
+                        type: boolean
+                        description: ''
+    MarketTradesHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        description: ''
+                      symbol:
+                        type: string
+                        description: ''
+                      side:
+                        type: string
+                        description: ''
+                      executedPrice:
+                        type: string
+                        description: ''
+                      executedQuantity:
+                        type: string
+                        description: ''
+                      executedTimestamp:
+                        type: number
+                        description: ''
+                      source:
+                        type: number
+                        description: ''
+                      rpi:
+                        type: boolean
+                        description: ''
+    OrderbookResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                asks:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      price:
+                        type: string
+                        description: ''
+                      quantity:
+                        type: string
+                        description: ''
+                bids:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      price:
+                        type: string
+                        description: ''
+                      quantity:
+                        type: string
+                        description: ''
+    KlineResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      open:
+                        type: string
+                        description: ''
+                      close:
+                        type: string
+                        description: ''
+                      low:
+                        type: string
+                        description: ''
+                      high:
+                        type: string
+                        description: ''
+                      volume:
+                        type: string
+                        description: ''
+                      amount:
+                        type: string
+                        description: ''
+                      symbol:
+                        type: string
+                        description: ''
+                      type:
+                        type: string
+                        description: ''
+                      startTimestamp:
+                        type: number
+                        description: ''
+                      endTimestamp:
+                        type: number
+                        description: ''
+    KlineHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        description: ''
+                      open:
+                        type: string
+                        description: ''
+                      close:
+                        type: string
+                        description: ''
+                      high:
+                        type: string
+                        description: ''
+                      low:
+                        type: string
+                        description: ''
+                      volume:
+                        type: string
+                        description: ''
+                      amount:
+                        type: string
+                        description: ''
+                      type:
+                        type: string
+                        description: ''
+                      startTimestamp:
+                        type: number
+                        description: ''
+                      endTimestamp:
+                        type: number
+                        description: ''
+    FundingRateResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        description: ''
+                      estFundingRate:
+                        type: string
+                        description: ''
+                      estFundingRateTimestamp:
+                        type: number
+                        description: ''
+                      lastFundingRate:
+                        type: string
+                        description: ''
+                      lastFundingRateTimestamp:
+                        type: number
+                        description: ''
+                      nextFundingTime:
+                        type: number
+                        description: ''
+                      lastFundingIntervalHours:
+                        type: number
+                        description: ''
+                      estFundingIntervalHours:
+                        type: number
+                        description: ''
+    FundingRateHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        description: ''
+                      fundingRate:
+                        type: string
+                        description: ''
+                      fundingRateTimestamp:
+                        type: number
+                        description: ''
+                      nextFundingTime:
+                        type: number
+                        description: ''
+                      markPrice:
+                        type: string
+                        description: ''
+    FuturesResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        description: ''
+                      indexPrice:
+                        type: string
+                        description: ''
+                      markPrice:
+                        type: string
+                        description: ''
+                      estFundingRate:
+                        type: string
+                        description: ''
+                      lastFundingRate:
+                        type: string
+                        description: ''
+                      openInterest:
+                        type: string
+                        description: ''
+                      24hOpen:
+                        type: string
+                        description: ''
+                      24hClose:
+                        type: string
+                        description: ''
+                      24hHigh:
+                        type: string
+                        description: ''
+                      24hLow:
+                        type: string
+                        description: ''
+                      24hVolume:
+                        type: string
+                        description: ''
+                      24hAmount:
+                        type: string
+                        description: ''
+                      nextFundingTime:
+                        type: number
+                        description: ''
+    InsuranceFundResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: ''
+                      balance:
+                        type: number
+                        description: ''
+    GetOrderRowResponse:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: PERP_BTC_USDT
+          description: Trading pair, e.g., BTC/USDT perpetual contract.
+        status:
+          type: string
+          example: FILLED
+          description: Order status, e.g., FILLED indicates the order has been fully executed.
+        side:
+          type: string
+          example: SELL
+          description: Trade direction, e.g., SELL means selling, BUY means buying.
+        positionSide:
+          type: string
+          example: BOTH
+          description: Position direction, e.g., BOTH indicates a dual position mode.
+        createdTime:
+          type: integer
+          format: int64
+          example: 1578565539808
+          description: Order creation time in Unix timestamp (milliseconds).
+        orderId:
+          type: integer
+          example: 13
+          description: Unique identifier for the order.
+        orderTag:
+          type: string
+          example: default
+          description: Order tag, e.g., default.
+        price:
+          type: string
+          example: '123'
+          description: Price of the limit order (price per unit of the asset).
+        type:
+          type: string
+          example: LIMIT
+          description: Order type, e.g., LIMIT represents a limit order.
+        quantity:
+          type: string
+          example: '0.1'
+          description: Total quantity of the order, representing the number of assets.
+        amount:
+          type: string
+          nullable: true
+          example: null
+          description: Total order amount, may be null.
+        visible:
+          type: string
+          example: '0.1'
+          description: Visible quantity, representing the portion of the order shown to the market.
+        executed:
+          type: string
+          example: '0.1'
+          description: Quantity that has been executed.
+        totalFee:
+          type: string
+          example: '0.00123'
+          description: Total fee charged for the order, denominated in the fee asset.
+        feeAsset:
+          type: string
+          example: USDT
+          description: Asset type used to pay fees.
+        totalRebate:
+          type: number
+          example: 0
+          description: Total rebate amount.
+        rebateCurrency:
+          type: string
+          example: USDT
+          description: Asset type for the rebate.
+        clientOrderId:
+          type: integer
+          example: 0
+          description: Client-defined order ID.
+        reduceOnly:
+          type: boolean
+          example: false
+          description: Indicates whether the order is reduce-only.
+        realizedPnl:
+          type: string
+          example: '100'
+          description: Realized profit and loss, e.g., 100 means a profit of 100 USDT.
+        averageExecutedPrice:
+          type: string
+          example: '123'
+          description: Average price at which the order was executed.
+        leverage:
+          type: integer
+          example: 10
+          description: ''
+        marginMode:
+          type: string
+          example: ''
+          description: ''
+        bidAskLevel:
+          type: integer
+          example: 2
+          description: ''
+    GetOrderResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/GetOrderRowResponse'
+    EditOrder:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          description: Id of the order; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        clientOrderId:
+          type: integer
+          description: Client order Id as assigned by the user; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        price:
+          type: string
+          description: Only applicable to LIMIT/IOC/FOK/POST_ONLY orders;  MARKET/ASK/BID orders will ignore this field
+          example: ''
+        quantity:
+          type: string
+          description: Either quantity or amount is required;  If both are passed, the request will be rejected
+          example: ''
+    EditOrderResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: ''
+    CreateOrder:
+      required:
+        - symbol
+        - side
+        - type
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Symbol name
+          example: SPOT_BTC_USDT
+        clientOrderId:
+          type: integer
+          description: Valid input ranges from 0 to 9223372036854775807
+          example: '1954766344355779056'
+        orderTag:
+          type: string
+          description: 'Optional tag for this order, max string length: 64'
+          example: ''
+        side:
+          type: string
+          description: BUY/SELL
+          example: ''
+        positionSide:
+          type: string
+          description: Position side; The default is BOTH in the one way mode;  Can only be LONG or SHORT in the hedge mode.  Only applicable to perpetual instruments.
+          example: ''
+        type:
+          type: string
+          description: LIMIT/MARKET/IOC/FOK/POST_ONLY/ASK/BID/AC/RPI where AC/RPI are only available to market makers.
+          example: ''
+        price:
+          type: string
+          description: Only applicable to LIMIT/IOC/FOK/POST_ONLY orders;  MARKET/ASK/BID orders will ignore this field
+          example: ''
+        quantity:
+          type: string
+          description: Either quantity or amount is required;  If both are passed, the request will be rejected
+          example: ''
+        amount:
+          type: string
+          description: Only applicable to MARKET/ASK/BID orders on spot instruments;  Either quantity or amount is required;  If both are passed, the request will be rejected
+          example: ''
+        reduceOnly:
+          type: boolean
+          description: Only applicable to perpetual instruments; Whether the order can only reduce in position size; valid options are true/false
+          example: ''
+        visibleQuantity:
+          type: string
+          description: The order quantity visible on orderbook
+          example: ''
+        marginMode:
+          type: string
+          description: CROSS / ISOLATED
+          example: ''
+        bidAskLevel:
+          type: string
+          description: '[1..5](only effective if type = ASK / BID)'
+          example: ''
+    CreateOrderResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                orderId:
+                  type: integer
+                  description: ''
+                type:
+                  type: string
+                  description: ''
+                price:
+                  type: string
+                  description: ''
+                quantity:
+                  type: string
+                  description: ''
+                amount:
+                  type: string
+                  description: ''
+                clientOrderId:
+                  type: integer
+                  description: ''
+                bidAskLevel:
+                  type: integer
+                  description: ''
+    CancelOrderResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: ''
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of record
+        recordsPerPage:
+          type: integer
+          description: Number of records per page
+        currentPage:
+          type: integer
+          description: Current page number
+    GetOrdersResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/GetOrderRowResponse'
+                  description: ''
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    GetAlgoOrderResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                algoOrderId:
+                  type: integer
+                  description: Unique identifier for the algorithmic order.
+                clientAlgoOrderId:
+                  type: integer
+                  description: Client-generated algorithmic order ID.
+                rootAlgoOrderId:
+                  type: integer
+                  description: Root algorithmic order ID.
+                parentAlgoOrderId:
+                  type: integer
+                  description: Parent algorithmic order ID, 0 if none.
+                symbol:
+                  type: string
+                  description: Trading pair identifier, e.g., SPOT_WOO_USDT.
+                orderTag:
+                  type: string
+                  description: Tag associated with the order, e.g., 'default'.
+                algoType:
+                  type: string
+                  description: Type of the algorithm, e.g., 'TRAILING_STOP'.
+                side:
+                  type: string
+                  description: Order direction, e.g., 'BUY' or 'SELL'.
+                positionSide:
+                  type: string
+                  description: Position direction, e.g., 'BOTH'.
+                quantity:
+                  type: integer
+                  description: The quantity for the order.
+                isTriggered:
+                  type: boolean
+                  description: Indicates if the order has been triggered.
+                triggerStatus:
+                  type: string
+                  description: The trigger status of the order, e.g., 'USELESS'.
+                type:
+                  type: string
+                  description: Order type, e.g., 'MARKET'.
+                rootAlgoStatus:
+                  type: string
+                  description: Status of the root algorithmic order, e.g., 'NEW'.
+                algoStatus:
+                  type: string
+                  description: Status of the algorithmic order, e.g., 'NEW'.
+                triggerPriceType:
+                  type: string
+                  description: The type of price used for triggering, e.g., 'MARKET_PRICE'.
+                triggerTime:
+                  type: string
+                  description: Timestamp for when the order is triggered, '0' if not triggered.
+                totalExecutedQuantity:
+                  type: string
+                  description: Total quantity executed.
+                averageExecutedPrice:
+                  type: string
+                  description: Average price of executed quantity.
+                totalFee:
+                  type: string
+                  description: Total fee charged for the order.
+                feeAsset:
+                  type: string
+                  description: Asset used for paying the fees.
+                totalRebate:
+                  type: string
+                  description: Total rebate received for the order.
+                rebateCurrency:
+                  type: string
+                  description: Currency in which rebate is paid, e.g., 'USDT'.
+                reduceOnly:
+                  type: boolean
+                  description: Indicates if the order is reduce-only.
+                createdTime:
+                  type: integer
+                  description: Timestamp of when the order was created.
+                updatedTime:
+                  type: integer
+                  description: Timestamp of when the order was last updated.
+                isActivated:
+                  type: boolean
+                  description: Indicates if the order is activated.
+                callbackRate:
+                  type: string
+                  description: Callback rate for the algorithm, e.g., '0.03'.
+                activatedPrice:
+                  type: string
+                  description: Activated price for the algorithm, e.g., '0.21'.
+                leverage:
+                  type: integer
+                  example: 10
+                  description: ''
+                marginMode:
+                  type: string
+                  example: ''
+                  description: ''
+    common_algo:
+      type: object
+      properties:
+        algoOrderId:
+          type: integer
+          description: Algo order Id; Either algoOrderId or clientOrderId is required. If both are passed, algoOrderId will be used.
+        clientAlgoOrderId:
+          type: integer
+          description: Algo order client order Id; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+        quantity:
+          type: string
+          description: Order quantity, not required for POSITIONAL_TP_SL order
+        visibleQuantity:
+          type: integer
+          description: The order quantity shown on orderbook;  for POSITIONAL_TP_SL order, visibleQuantity applies directly to the child orders
+    stop_order:
+      description: ''
+      title: Stop
+      allOf:
+        - $ref: '#/components/schemas/common_algo'
+        - type: object
+          properties:
+            triggerPrice:
+              type: string
+              description: New trigger price
+            triggerPriceType:
+              type: string
+              description: 'New trigger price type, currently only support MARKET_PRICE (i.e. last price) '
+            price:
+              type: string
+              description: New order price, only applicable if type is LIMIT
+    oco_order:
+      description: ''
+      title: OCO
+      allOf:
+        - $ref: '#/components/schemas/common_algo'
+        - type: object
+          properties:
+            price:
+              type: string
+              description: New order price of the LIMIT order
+            childOrders:
+              type: array
+              description: Details of the trigger order
+              items:
+                type: object
+                properties:
+                  triggerPrice:
+                    type: string
+                    description: New trigger price
+                  triggerPriceType:
+                    type: string
+                    description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                  price:
+                    type: string
+                    description: New order price, only applicable if trigger order type is LIMIT
+    trailing_stop:
+      description: ''
+      title: Trailing stop
+      allOf:
+        - $ref: '#/components/schemas/common_algo'
+        - type: object
+          properties:
+            activatedPrice:
+              type: string
+              description: New activated price for TRAILING_STOP order
+            triggerPriceType:
+              type: boolean
+              description: 'New trigger price type, currently only support MARKET_PRICE (i.e. last price);  Effective on activatedPrice '
+            callbackRate:
+              type: string
+              description: New trailing rate for TRAILING_STOP order;  Editing from using callbackRate to using callbackValue or vice versa is not allowed
+            callbackValue:
+              type: string
+              description: New trailing value for TRAILING_STOP order;  Editing from using callbackRate to using callbackValue or vice versa is not allowed
+    positional_tp_sl:
+      description: ''
+      title: Positional TP/SL
+      allOf:
+        - $ref: '#/components/schemas/common_algo'
+        - type: object
+          properties:
+            childOrders:
+              type: array
+              description: Details of the TAKE_PROFIT and the STOP_LOSS order
+              items:
+                type: object
+                properties:
+                  algoOrderId:
+                    type: string
+                    description: Algo order Id of the TAKE_PROFIT or the STOP_LOSS order
+                  triggerPrice:
+                    type: string
+                    description: New trigger price
+                  triggerPriceType:
+                    type: string
+                    description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+    tp_sl:
+      description: ''
+      title: TP/SL
+      allOf:
+        - $ref: '#/components/schemas/common_algo'
+        - type: object
+          properties:
+            childOrders:
+              type: array
+              description: Details of the TAKE_PROFIT and the STOP_LOSS order
+              items:
+                type: object
+                properties:
+                  algoOrderId:
+                    type: string
+                    description: Algo order Id of the TAKE_PROFIT or the STOP_LOSS order
+                  triggerPrice:
+                    type: string
+                    description: New trigger price
+                  triggerPriceType:
+                    type: string
+                    description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+    bracket:
+      description: ''
+      title: Bracket
+      allOf:
+        - $ref: '#/components/schemas/common_algo'
+        - type: object
+          properties:
+            price:
+              type: string
+              description: Order price of the initial order, only applicable if the initial order type is LIMIT
+            childOrders:
+              type: array
+              description: Details of the Positional_TP_SL or the TP_SL order
+              items:
+                type: object
+                properties:
+                  algoOrderId:
+                    type: string
+                    description: Algo order Id of the Positional_TP_SL or the TP_SL order
+                  triggerPrice:
+                    type: string
+                    description: New trigger price
+                  triggerPriceType:
+                    type: string
+                    description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+    stop_bracket:
+      description: ''
+      title: Stop bracket
+      allOf:
+        - $ref: '#/components/schemas/common_algo'
+        - type: object
+          properties:
+            price:
+              type: string
+              description: Order price of the initial order, only applicable if the initial order type is LIMIT
+            triggerPrice:
+              type: string
+              description: Trigger price of the initial stop order
+            triggerPriceType:
+              type: string
+              description: Trigger price type of the initial stop order, currently only support MARKET_PRICE (i.e. last price)
+            childOrders:
+              type: array
+              description: Attached TP/SL orders, only support 1 set of POSITIONAL_TP_SL or TP_SL
+              items:
+                type: object
+                properties:
+                  algoOrderId:
+                    type: string
+                    description: Algo order Id of the Positional_TP_SL or the TP_SL order
+                  childOrders:
+                    type: array
+                    description: Details of the TP/SL information, can contain at most 1 TAKE_PROFIT and 1 STOP_LOSS
+                    items:
+                      type: object
+                      properties:
+                        algoOrderId:
+                          type: string
+                          description: Algo order Id of the TAKE_PROFIT or the STOP_LOSS order
+                        triggerPrice:
+                          type: string
+                          description: New trigger price
+                        triggerPriceType:
+                          type: string
+                          description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+    common_algo_common_algo:
+      type: object
+      required:
+        - symbol
+        - algoType
+      properties:
+        symbol:
+          type: string
+          description: Symbol name
+        clientAlgoOrderId:
+          type: integer
+          description: Client algo order Id as assigned by the user
+        algoOrderTag:
+          type: string
+          description: 'An optional tag for this order, max string length: 64'
+        side:
+          type: string
+          description: BUY/SELL, not required for POSITIONAL_TP_SL or TP_SL order
+        positionSide:
+          type: string
+          description: BOTH for one way mode; LONG or SHORT for hedge mode;  Only applicable to perpetual instruments
+        quantity:
+          type: string
+          description: Order quantity, not required for POSITIONAL_TP_SL order
+        visibleQuantity:
+          type: string
+          description: The order quantity shown on orderbook;  for POSITIONAL_TP_SL order, visibleQuantity applies directly to the child orders
+        marginMode:
+          type: string
+          description: CROSS / ISOLATED
+    stop_order_stop_order:
+      description: ''
+      title: Stop
+      allOf:
+        - $ref: '#/components/schemas/common_algo_common_algo'
+        - type: object
+          properties:
+            algoType:
+              type: string
+              description: 'STOP: stop market / stop limit order'
+            triggerPrice:
+              type: string
+              description: Only support LIMIT
+            triggerPriceType:
+              type: string
+              description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+            type:
+              type: string
+              description: Trigger price, only support LIMIT
+            price:
+              type: string
+              description: Order price, only applicable to LIMIT type
+            reduceOnly:
+              type: boolean
+              description: Only applicable to perpetual instruments; whether the order can only reduce in position size; valid options are true/false
+    oco_order_oco_order:
+      description: ''
+      title: OCO
+      allOf:
+        - $ref: '#/components/schemas/common_algo_common_algo'
+        - type: object
+          required:
+            - type
+            - price
+            - childOrders
+          properties:
+            algoType:
+              type: string
+              description: 'OCO: one-cancels-the-other order'
+            type:
+              type: string
+              description: Trigger price, only support LIMIT
+            price:
+              type: string
+              description: Order price, only applicable to LIMIT type
+            reduceOnly:
+              type: boolean
+              description: Only applicable to perpetual instruments; whether the order can only reduce in position size; valid options are true/false
+            childOrders:
+              type: array
+              description: Details of the other order (i.e. the trigger order)
+              items:
+                type: object
+                properties:
+                  algoType:
+                    type: string
+                    description: Only support STOP
+                  side:
+                    type: string
+                    description: BUY/SELL; required to be the same as the side of the LIMIT order
+                  triggerPrice:
+                    type: string
+                    description: Trigger price
+                  triggerPriceType:
+                    type: string
+                    description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                  type:
+                    type: string
+                    description: Order type of the trigger order, LIMIT/MARKET
+                  price:
+                    type: string
+                    description: Order price of the trigger order, only applicable if it's a LIMIT order
+                required:
+                  - algoType
+                  - side
+                  - triggerPrice
+                  - type
+    trailing_stop_trailing_stop:
+      description: ''
+      title: Trailing stop
+      allOf:
+        - $ref: '#/components/schemas/common_algo_common_algo'
+        - type: object
+          properties:
+            algoType:
+              type: string
+              description: 'TRAILING_STOP: trailing stop order '
+            type:
+              type: string
+              description: Trigger price, only support LIMIT
+            activatedPrice:
+              type: string
+              description: Activated price
+            callbackRate:
+              type: string
+              description: Either callbackValue or callbackRate is required;  If both are passed, the request will be rejected
+            callbackValue:
+              type: string
+              description: Either callbackValue or callbackRate is required;  If both are passed, the request will be rejected
+            reduceOnly:
+              type: boolean
+              description: Only applicable to perpetual instruments; whether the order can only reduce in position size; valid options are true/false
+    positional_tp_sl_positional_tp_sl:
+      description: ''
+      title: Positional TP/SL
+      allOf:
+        - $ref: '#/components/schemas/common_algo_common_algo'
+        - type: object
+          required:
+            - childOrders
+          properties:
+            algoType:
+              type: string
+              description: 'POSITIONAL_TP_SL: TP/SL that closes the full position'
+            childOrders:
+              type: array
+              description: Details of the positional TP/SL information, can contain at most 1 TAKE_PROFIT and 1 STOP_LOSS
+              items:
+                type: object
+                properties:
+                  algoType:
+                    type: string
+                    description: TAKE_PROFIT/STOP_LOSS
+                  side:
+                    type: string
+                    description: BUY/SELL
+                  triggerPrice:
+                    type: string
+                    description: Trigger price
+                  triggerPriceType:
+                    type: string
+                    description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                  type:
+                    type: string
+                    description: Only support CLOSE_POSITION
+                required:
+                  - algoType
+                  - side
+                  - triggerPrice
+                  - type
+    tp_sl_tp_sl:
+      description: ''
+      title: TP/SL
+      allOf:
+        - $ref: '#/components/schemas/common_algo_common_algo'
+        - type: object
+          required:
+            - childOrders
+          properties:
+            algoType:
+              type: string
+              description: 'TP_SL: TP/SL that closes a specified quantity'
+            childOrders:
+              type: array
+              description: Details of the TP/SL information, can contain at most 1 TAKE_PROFIT and 1 STOP_LOSS
+              items:
+                type: object
+                properties:
+                  algoType:
+                    type: string
+                    description: TAKE_PROFIT/STOP_LOSS
+                  side:
+                    type: string
+                    description: BUY/SELL
+                  triggerPrice:
+                    type: string
+                    description: Trigger price
+                  triggerPriceType:
+                    type: string
+                    description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                  type:
+                    type: string
+                    description: Only support MARKET
+                required:
+                  - algoType
+                  - side
+                  - triggerPrice
+                  - type
+    bracket_bracket:
+      description: ''
+      title: Bracket
+      allOf:
+        - $ref: '#/components/schemas/common_algo_common_algo'
+        - type: object
+          required:
+            - type
+            - price
+            - childOrders
+          properties:
+            algoType:
+              type: string
+              description: 'BRACKET: bracket order with limit or market order as the initial order and an attached POSITIONAL_TP_SL or TP_SL order'
+            type:
+              type: string
+              description: LIMIT/MARKET
+            price:
+              type: string
+              description: Order price, only applicable if LIMIT order
+            reduceOnly:
+              type: boolean
+              description: Only applicable to perpetual instruments; whether the LIMIT/MARKET order can only reduce in position size; only support false for BRACKET orders
+            childOrders:
+              type: array
+              description: Attached TP/SL orders, only support 1 set of POSITIONAL_TP_SL or TP_SL
+              items:
+                type: object
+                properties:
+                  algoType:
+                    type: string
+                    description: TAKE_PROFIT/STOP_LOSS
+                  side:
+                    type: string
+                    description: Required to be SELL if side of the initial order is BUY;  Required to be BUY if side of the initial order is SELL
+                  triggerPrice:
+                    type: string
+                    description: Trigger price of the TP/SL
+                  triggerPriceType:
+                    type: string
+                    description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                  type:
+                    type: string
+                    description: CLOSE_POSITION for POSITIONAL_TP_SL; MARKET for TP_SL
+                required:
+                  - algoType
+                  - side
+                  - triggerPrice
+                  - type
+    stop_bracket_stop_bracket:
+      description: ''
+      title: Stop bracket
+      allOf:
+        - $ref: '#/components/schemas/common_algo_common_algo'
+        - type: object
+          required:
+            - type
+            - price
+            - childOrders
+          properties:
+            algoType:
+              type: string
+              description: 'STOP_BRACKET: bracket order with stop market or stop limit order as the initial order and an attached POSITIONAL_TP_SL or TP_SL order'
+            type:
+              type: string
+              description: LIMIT/MARKET
+            price:
+              type: string
+              description: Order price, only applicable if LIMIT order
+            reduceOnly:
+              type: boolean
+              description: Only applicable to perpetual instruments; whether the LIMIT/MARKET order can only reduce in position size; only support false for STOP_BRACKET orders
+            triggerPrice:
+              type: string
+              description: Trigger price of the initial stop order
+            triggerPriceType:
+              type: string
+              description: Trigger price type of the initial stop order, currently only support MARKET_PRICE (i.e. last price)
+            childOrders:
+              type: array
+              description: Attached TP/SL orders, only support 1 set of POSITIONAL_TP_SL or TP_SL
+              items:
+                type: object
+                properties:
+                  algoType:
+                    type: string
+                    description: POSITIONAL_TP_SL/TP_SL
+                  childOrders:
+                    type: array
+                    description: Details of the TP/SL information, can contain at most 1 TAKE_PROFIT and 1 STOP_LOSS
+                    items:
+                      type: object
+                      properties:
+                        algoType:
+                          type: string
+                          description: TAKE_PROFIT/STOP_LOSS
+                        side:
+                          type: string
+                          description: Required to be SELL if side of the initial order is BUY;  Required to be BUY if side of the initial order is SELL
+                        triggerPrice:
+                          type: string
+                          description: Trigger price of the TP/SL
+                        triggerPriceType:
+                          type: string
+                          description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                        type:
+                          type: string
+                          description: CLOSE_POSITION for POSITIONAL_TP_SL; MARKET for TP_SL
+                      required:
+                        - algoType
+                        - side
+                        - triggerPrice
+                        - type
+                required:
+                  - algoType
+                  - childOrders
+    AlgoBaseResponse:
+      type: object
+      properties:
+        algoOrderId:
+          type: integer
+          description: algoOrderId
+        clientAlgoOrderId:
+          type: integer
+          description: clientAlgoOrderId
+        algoType:
+          type: string
+          description: ALGO_TYPE
+        quantity:
+          type: string
+          description: quantity
+    StopResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AlgoBaseResponse'
+                  description: ''
+    GetAlgoOrderRowResponse:
+      type: object
+      properties:
+        algoOrderId:
+          type: integer
+          description: Unique identifier for the algorithmic order.
+        clientAlgoOrderId:
+          type: integer
+          description: Client-generated unique identifier for the algorithmic order.
+        rootAlgoOrderId:
+          type: integer
+          description: Root algorithmic order ID, linking to the original order.
+        parentAlgoOrderId:
+          type: integer
+          description: Parent algorithmic order ID, 0 if there is no parent order.
+        symbol:
+          type: string
+          description: Trading pair symbol, e.g., SPOT_WOO_USDT.
+        algoOrderTag:
+          type: string
+          description: Tag associated with the algorithmic order, e.g., 'default'.
+        algoType:
+          type: string
+          description: Type of algorithmic order, e.g., TRAILING_STOP.
+        side:
+          type: string
+          description: Trade direction, e.g., SELL indicates selling.
+        positionSide:
+          type: string
+          description: Position side, e.g., BOTH indicates a dual position mode.
+        quantity:
+          type: integer
+          description: Quantity for the algorithmic order.
+        isTriggered:
+          type: boolean
+          description: Indicates whether the order has been triggered.
+        triggerStatus:
+          type: string
+          description: Trigger status of the order, e.g., USELESS.
+        type:
+          type: string
+          description: Order type, e.g., MARKET.
+        rootAlgoStatus:
+          type: string
+          description: Status of the root algorithmic order, e.g., NEW.
+        algoStatus:
+          type: string
+          description: Status of the algorithmic order, e.g., NEW.
+        triggerPriceType:
+          type: string
+          description: Price type used for triggering, e.g., MARKET_PRICE.
+        triggerTime:
+          type: string
+          description: Timestamp when the order was triggered, '0' if not triggered.
+        totalExecutedQuantity:
+          type: string
+          description: Total executed quantity for the order.
+        averageExecutedPrice:
+          type: string
+          description: Average price of the executed quantity.
+        totalFee:
+          type: string
+          description: Total fee charged for the algorithmic order.
+        feeAsset:
+          type: string
+          description: Asset type used for paying fees, e.g., USDT.
+        totalRebate:
+          type: number
+          description: Total rebate received for the order.
+        rebateCurrency:
+          type: string
+          description: Currency in which the rebate is paid, e.g., USDT.
+        reduceOnly:
+          type: boolean
+          description: Indicates whether the order is reduce-only.
+        createdTime:
+          type: integer
+          format: int64
+          description: Timestamp when the order was created (in milliseconds).
+        updatedTime:
+          type: integer
+          format: int64
+          description: Timestamp when the order was last updated (in milliseconds).
+        isActivated:
+          type: boolean
+          description: Indicates whether the algorithmic order is activated.
+        callbackRate:
+          type: string
+          description: Callback rate for the algorithmic order.
+        activatedPrice:
+          type: string
+          description: Activated price for the algorithmic order.
+        leverage:
+          type: integer
+          example: 10
+          description: ''
+        marginMode:
+          type: string
+          example: ''
+          description: ''
+    GetAlgoOrdersResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/GetAlgoOrderRowResponse'
+                  description: ''
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    GetTransactionResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: Unique identifier for the order execution detail.
+                symbol:
+                  type: string
+                  description: Trading pair symbol, e.g., SPOT_BTC_USDT.
+                fee:
+                  type: number
+                  description: Trading fee incurred during the execution.
+                feeAsset:
+                  type: string
+                  description: Asset type used to pay the trading fee.
+                side:
+                  type: string
+                  description: Trade direction.
+                orderId:
+                  type: integer
+                  description: Identifier for the order to which this execution belongs.
+                executedPrice:
+                  type: string
+                  description: Price at which the execution occurred.
+                executedQuantity:
+                  type: string
+                  description: Quantity of the asset that was executed.
+                isMaker:
+                  type: integer
+                  description: Indicates if the order was a maker order (1) or a taker order (0).
+                realizedPnl:
+                  type: string
+                  nullable: true
+                  description: Realized profit and loss. Can be null if not applicable.
+                executedTimestamp:
+                  type: integer
+                  format: int64
+                  description: Timestamp of the execution in Unix milliseconds.
+                isMatchRpi:
+                  type: boolean
+                  example: false
+                  description: Indicates if the order was a RPI order.
+    GetTransactionsRowResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the execution detail.
+        symbol:
+          type: string
+          description: Trading pair symbol, e.g., SPOT_BTC_USDT.
+        orderId:
+          type: integer
+          description: Identifier for the order to which this execution belongs.
+        orderTag:
+          type: string
+          description: Tag associated with the order, e.g., 'default'.
+        executedPrice:
+          type: string
+          description: Price at which the execution occurred.
+        executedQuantity:
+          type: string
+          description: Quantity of the asset that was executed.
+        isMaker:
+          type: integer
+          description: Indicates if the order was a maker order (1) or a taker order (0).
+        isMatchRpi:
+          type: boolean
+          description: Indicates if the order was a RPI order.
+        side:
+          type: string
+          description: Trade direction, e.g., SELL or BUY.
+        fee:
+          type: number
+          description: Trading fee incurred during the execution.
+        feeAsset:
+          type: string
+          description: Asset type used to pay the trading fee.
+        realizedPnl:
+          type: string
+          nullable: true
+          description: Realized profit and loss. Can be null if not applicable.
+        executedTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of the execution in Unix milliseconds.
+    GetTransactionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/GetTransactionsRowResponse'
+                  description: ''
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    GetTradingFeeResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: Trading pair symbol, e.g., SPOT_ETH_USDT.
+                takerFee:
+                  type: string
+                  description: Fee rate for taker orders, represented as a string.
+                makerFee:
+                  type: string
+                  description: Fee rate for maker orders, represented as a string.
+    CancelAllAfter:
+      required:
+        - triggerAfter
+      type: object
+      properties:
+        triggerAfter:
+          type: integer
+          description: Timeout in ms.  Max timeout can be set to 900000.  To cancel this timer, set timeout to 0.
+          example: '1711534302938'
+    CancelAllAfterResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                expectedTriggerTime:
+                  type: integer
+                  description: ''
+    ReferralResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      referralId:
+                        type: integer
+                        description: Referral ID
+                      registerTime:
+                        type: string
+                        description: Time the referral was registered
+                      referralCode:
+                        type: string
+                        description: Referral code
+                      tradeStatus:
+                        type: string
+                        description: Status of the trade
+                      earned:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            token:
+                              type: string
+                              description: Token type
+                            amount:
+                              type: string
+                              description: Amount earned
+                      extraBonus:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            token:
+                              type: string
+                              description: Token type
+                            amount:
+                              type: string
+                              description: Amount earned
+                      previousCommission:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            token:
+                              type: string
+                              description: Token type
+                            totalAmount:
+                              type: string
+                              description: Amount earned
+                      email:
+                        type: string
+                        description: Email address
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    TokenConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: Token symbol, e.g., BTC.
+                      collateralRatio:
+                        type: string
+                        description: The collateral ratio of the token, represented as a string.
+                      marginFactor:
+                        type: string
+                        description: The margin factor of the token, represented as a string for precision.
+                      collateral:
+                        type: boolean
+                        description: Indicates if the token is currently being used as collateral.
+                      canCollateral:
+                        type: boolean
+                        description: Indicates if the token can be used as collateral.
+                      canShort:
+                        type: boolean
+                        description: Indicates if short selling is supported for the token.
+                      marginMaxLeverage:
+                        type: integer
+                        description: Maximum leverage allowed for margin trading.
+                      marginMaxPosition:
+                        type: integer
+                        description: Maximum allowed position size for the token in margin trading.
+    SymbolConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        description: Trading pair symbol, e.g., PERP_BTC_USDT.
+                      margin_factor:
+                        type: string
+                        description: Margin factor for the trading pair, represented as a string for precision.
+                      maxLeverage:
+                        type: integer
+                        description: Maximum leverage allowed for this trading pair.
+                      maxPosition:
+                        type: integer
+                        description: Maximum position size allowed for this trading pair.
+    AccountInfoResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                applicationId:
+                  type: string
+                  description: The ID of the application associated with the account.
+                account:
+                  type: string
+                  description: The account identifier.
+                alias:
+                  type: string
+                  description: Alias name for the account.
+                otpauth:
+                  type: boolean
+                  description: Indicates whether OTP authentication is enabled for the account.
+                accountMode:
+                  type: string
+                  description: The account mode, e.g., 'MARGIN'.
+                positionMode:
+                  type: string
+                  description: Position mode of the account, e.g., 'ONE_WAY'.
+                leverage:
+                  type: integer
+                  description: The leverage level set for the account.
+                marginRatio:
+                  type: string
+                  description: The margin ratio of the account.
+                openMarginRatio:
+                  type: string
+                  description: The open margin ratio of the account.
+                initialMarginRatio:
+                  type: string
+                  description: The initial margin ratio of the account.
+                maintenanceMarginRatio:
+                  type: string
+                  description: The maintenance margin ratio of the account.
+                totalCollateral:
+                  type: string
+                  description: The total collateral value of the account.
+                freeCollateral:
+                  type: string
+                  description: The free collateral value of the account.
+                totalAccountValue:
+                  type: string
+                  description: The total account value.
+                totalTradingValue:
+                  type: string
+                  description: The total trading value of the account.
+                totalVaultValue:
+                  type: string
+                  description: The total vault value of the account.
+                totalStakingValue:
+                  type: string
+                  description: The total staking value of the account.
+                totalEarnValue:
+                  type: string
+                  description: The total value earned by the account.
+                totalLaunchpadValue:
+                  type: string
+                  description: The total launchpad value of the account.
+                referrerID:
+                  type: string
+                  description: The ID of the referrer associated with the account.
+                accountType:
+                  type: string
+                  description: The type of the account, e.g., 'Main'.
+    SetTradingMode:
+      required:
+        - tradingMode
+      type: object
+      properties:
+        tradingMode:
+          type: string
+          description: PURE_SPOT/MARGIN/FUTURES
+          example: PURE_SPOT
+    CredentialsResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      accountName:
+                        type: string
+                        description: The account name associated with the API key, e.g., 'Main'.
+                      userId:
+                        type: integer
+                        description: The unique identifier of the user associated with the API key.
+                      apiKey:
+                        type: string
+                        description: The API key used for authentication.
+                      permissions:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                            - READ
+                            - TRADE
+                            - WITHDRAWAL
+                        description: The permissions assigned to the API key, e.g., 'READ', 'TRADE', 'WITHDRAWAL'.
+                      allowedIPs:
+                        type: array
+                        items:
+                          type: string
+                          format: ipv4
+                        description: A list of IP addresses allowed to use this API key. This field may be hidden if there is no IP restriction.
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    SubAccountsResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      applicationId:
+                        type: string
+                        description: The unique identifier for the application.
+                      name:
+                        type: string
+                        description: The name of the application or sub-account.
+                      createdTime:
+                        type: string
+                        description: The time the application was created, represented as a Unix timestamp in seconds with millisecond precision.
+    GetListenKey:
+      required:
+        - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: WEBSOCKET
+          example: WEBSOCKET
+    ListenKeyResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                authKey:
+                  type: string
+                  description: listenKey
+                expiredTime:
+                  type: integer
+                  description: ''
+    SetLeverage:
+      required:
+        - leverage
+      type: object
+      properties:
+        leverage:
+          type: integer
+          description: 'For margin mode: 3, 4, 5, 10; for futures mode: 1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 50'
+          example: '5'
+    InterestRateResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: The token symbol, e.g., 'MATIC'.
+                      currentHourlyBaseRate:
+                        type: string
+                        description: The current hourly base rate for the token.
+                      estHourlyBaseRate:
+                        type: string
+                        description: The estimated hourly base rate for the token.
+                      currentAnnualBaseRate:
+                        type: string
+                        description: The current annual base rate for the token.
+                      estAnnualBaseRate:
+                        type: string
+                        description: The estimated annual base rate for the token.
+                      estTime:
+                        type: integer
+                        description: The estimated time in Unix timestamp (milliseconds).
+    GetInterestHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the loan transaction.
+                      token:
+                        type: string
+                        description: The token symbol associated with the loan, e.g., 'USDT'.
+                      side:
+                        type: string
+                        description: The transaction side, e.g., 'LOAN' for loan transactions.
+                      status:
+                        type: string
+                        description: The transaction status, e.g., 'SUCCEED' for completed transactions.
+                      quantity:
+                        type: string
+                        description: The quantity of the token involved in the loan transaction.
+                      userId:
+                        type: integer
+                        description: The unique identifier of the user involved in the transaction.
+                      applicationId:
+                        type: string
+                        description: The unique identifier for the application associated with the transaction.
+                      interest:
+                        type: string
+                        description: The interest amount incurred on the loan transaction.
+                      hourlyRate:
+                        type: string
+                        description: The hourly interest rate for the loan.
+                      annualRate:
+                        type: string
+                        description: The annual interest rate for the loan.
+                      createdTime:
+                        type: integer
+                        description: The time the loan transaction was created, represented as a Unix timestamp (milliseconds).
+                      updatedTime:
+                        type: integer
+                        description: The time the loan transaction was last updated, represented as a Unix timestamp (milliseconds).
+                      loanAmount:
+                        type: string
+                        description: The total loan amount involved in the transaction.
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    InterestRepay:
+      required:
+        - token
+        - amount
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token name in upper case
+        amount:
+          type: number
+          description: Repay amount
+    GetMaxMarginResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: The trading pair symbol, e.g., 'SPOT_ETH_USDT'.
+                availableBaseQuantity:
+                  type: string
+                  description: The maximum available quantity of the base token to sell into the quote token.
+                availableQuoteQuantity:
+                  type: string
+                  description: The maximum available quantity of the quote token to buy the base token.
+    TokenHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: ''
+                      type:
+                        type: string
+                        description: type
+                      token:
+                        type: string
+                        description: token
+                      amount:
+                        type: string
+                        description: amount
+                      timestamp:
+                        type: integer
+                        description: timestamp
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    TransferHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the transfer.
+                      token:
+                        type: string
+                        description: The token symbol for the transfer, e.g., 'USDT'.
+                      amount:
+                        type: string
+                        description: The amount of the token transferred.
+                      status:
+                        type: string
+                        description: The status of the transfer, e.g., 'COMPLETED'.
+                      from:
+                        type: object
+                        description: The source account details for the transfer.
+                        properties:
+                          applicationId:
+                            type: string
+                            description: The application ID of the source account.
+                          accountName:
+                            type: string
+                            description: The account name of the source account.
+                      to:
+                        type: object
+                        description: The destination account details for the transfer.
+                        properties:
+                          applicationId:
+                            type: string
+                            description: The application ID of the destination account.
+                          accountName:
+                            type: string
+                            description: The account name of the destination account.
+                      createdTime:
+                        type: string
+                        description: The time the transfer was created, represented as a string timestamp.
+                      updatedTime:
+                        type: string
+                        description: The time the transfer was last updated, represented as a string timestamp.
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    Transfer:
+      required:
+        - tradingMode
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token name in upper case
+        amount:
+          type: number
+          description: withdraw amount
+        from:
+          type: object
+          properties:
+            applicationId:
+              type: string
+              description: the application which will transfer asset out
+        to:
+          type: object
+          properties:
+            applicationId:
+              type: string
+              description: the application which will transfer asset in
+    TransferResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: number
+                  description: ''
+    WalletHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      createdTime:
+                        type: string
+                        description: The time the transaction was created, in Unix epoch time (seconds).
+                      updatedTime:
+                        type: string
+                        description: The time the transaction was last updated, in Unix epoch time (seconds).
+                      id:
+                        type: string
+                        description: The unique identifier for the transaction.
+                      externalId:
+                        type: string
+                        description: The external identifier for the transaction, if applicable.
+                      applicationId:
+                        type: string
+                        description: The application ID related to the transaction, or null if not applicable.
+                      token:
+                        type: string
+                        description: The token symbol involved in the transaction, e.g., 'ETH'.
+                      targetAddress:
+                        type: string
+                        description: The target blockchain address for the transaction.
+                      sourceAddress:
+                        type: string
+                        description: The source blockchain address for the transaction.
+                      confirmingThreshold:
+                        type: integer
+                        description: The number of confirmations required for the transaction to be considered confirmed.
+                      confirmedNumber:
+                        type: integer
+                        description: The current number of confirmations received for the transaction.
+                      extra:
+                        type: string
+                        description: Additional information about the transaction, if any.
+                      type:
+                        type: string
+                        description: The transaction type, e.g., 'BALANCE'.
+                      tokenSide:
+                        type: string
+                        description: The token side for the transaction, e.g., 'DEPOSIT' or 'WITHDRAWAL'.
+                      amount:
+                        type: string
+                        description: The amount of the token involved in the transaction.
+                      txId:
+                        type: string
+                        description: The blockchain transaction ID.
+                      feeToken:
+                        type: string
+                        description: The token used to pay transaction fees, or null if not applicable.
+                      feeAmount:
+                        type: string
+                        description: The amount of fees paid for the transaction, or null if not applicable.
+                      status:
+                        type: string
+                        description: The current status of the transaction, e.g., 'CONFIRMING', 'SUCCEEDED', or 'FAILED'.
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    WalletDepositResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                address:
+                  type: string
+                  description: The deposit address for the token.
+                extra:
+                  type: string
+                  description: ''
+    Withdraw:
+      required:
+        - token
+        - network
+        - amount
+        - address
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token name in upper case
+        network:
+          type: string
+          description: Network name (from /v3/public/token)
+        amount:
+          type: number
+          description: withdraw amount
+          example: ''
+        extra:
+          type: string
+          description: address extra information such as MEMO or TAG
+          example: ''
+        address:
+          type: string
+          description: the address you want to withdraw
+          example: ''
+    WithdrawResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                withdrawId:
+                  type: string
+                  description: ''
+    YieldHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: Unique identifier for the staking entry.
+                      token:
+                        type: string
+                        description: The token being staked (e.g., WOO).
+                      stakingSize:
+                        type: string
+                        description: The amount of tokens currently staked.
+                      annualReward:
+                        type: string
+                        description: The annual reward rate for the staked token.
+                      yieldAmount:
+                        type: string
+                        description: The amount of yield earned so far.
+                      yieldTime:
+                        type: string
+                        description: The timestamp (Unix epoch in seconds) for the last yield calculation or payout.
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    GetBalancesResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                holding:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: The token symbol (e.g., WOO).
+                      holding:
+                        type: string
+                        description: The total amount of the token currently held by the user.
+                      frozen:
+                        type: string
+                        description: The amount of the token that is frozen (e.g., due to open orders or other restrictions).
+                      staked:
+                        type: string
+                        description: The amount of the token that is currently staked.
+                      unbonding:
+                        type: string
+                        description: The amount of the token that is in the unbonding period.
+                      vault:
+                        type: string
+                        description: The amount of the token in the vault.
+                      interest:
+                        type: string
+                        description: The interest earned from holding the token.
+                      earn:
+                        type: string
+                        description: The amount of the token earned from yield or other programs.
+                      pendingShortQty:
+                        type: string
+                        description: The pending quantity for short positions.
+                      pendingLongQty:
+                        type: string
+                        description: The pending quantity for long positions.
+                      availableBalance:
+                        type: string
+                        description: The available balance of the token for trading or withdrawal.
+                      averageOpenPrice:
+                        type: string
+                        description: The average open price of the user's positions in the token.
+                      markPrice:
+                        type: string
+                        description: The current market price of the token.
+                      pnl24H:
+                        type: string
+                        description: The profit or loss in the past 24 hours for this token.
+                      fee24H:
+                        type: string
+                        description: The total fees incurred in the past 24 hours for this token.
+                      timestamp:
+                        type: integer
+                        format: int64
+                        description: The timestamp (Unix epoch in milliseconds) of the data snapshot.
+    DefaultMarginModeResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: integer
+                        description: ''
+                      defaultMarginMode:
+                        type: string
+                        description: ''
+    SetAccountMarginMode:
+      required:
+        - defaultMarginMode
+      type: object
+      properties:
+        defaultMarginMode:
+          type: string
+          description: 'default margin mode Enums: CROSS | ISOLATED'
+    LeverageResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: The trading pair or symbol (e.g., PERP_BTC_USDT).
+                marginMode:
+                  type: string
+                  description: The margin mode applied for the specified symbol.
+                  enum:
+                    - CROSS
+                    - ISOLATED
+                positionMode:
+                  type: string
+                  description: The position mode applied for the specified symbol.
+                  enum:
+                    - ONE_WAY
+                    - HEDGE_MODE
+                details:
+                  type: array
+                  description: Leverage settings for each position side.
+                  items:
+                    type: object
+                    properties:
+                      positionSide:
+                        type: string
+                        description: The position side (LONG or SHORT).
+                        enum:
+                          - LONG
+                          - SHORT
+                      leverage:
+                        type: integer
+                        description: The leverage value set for this position side.
+                    required:
+                      - positionSide
+                      - leverage
+    SetFuturesLeverage:
+      required:
+        - symbol
+        - marginMode
+        - leverage
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: ''
+        marginMode:
+          type: string
+          description: 'values: CROSS | ISOLATED'
+        positionMode:
+          type: string
+          description: 'values: ONE_WAY | HEDGE_MODE Note:only required when marginMode=ISOLATED marginMode=CROSS , ignore this field'
+        leverage:
+          type: integer
+          description: ''
+    AdjustMargin:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: The trading pair for the futures position.
+        positionSide:
+          type: string
+          description: The side of the position (LONG or SHORT).
+        adjustToken:
+          type: string
+          description: The token used for the margin adjustment.
+        adjustAmount:
+          type: string
+          description: The amount of the token to be added or removed as margin.
+        action:
+          type: string
+          description: 'The action to take: ADD to increase margin or REMOVE to decrease margin.'
+    GetFundingFeeHistoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the funding transaction.
+                      symbol:
+                        type: string
+                        description: The trading pair symbol, e.g., PERP_BTC_USDT.
+                      fundingRate:
+                        type: number
+                        format: float
+                        description: The funding rate applied to the position.
+                      markPrice:
+                        type: string
+                        description: The mark price of the position at the time of funding.
+                      fundingFee:
+                        type: string
+                        description: The total funding fee for the position.
+                      fundingIntervalHours:
+                        type: integer
+                        description: The interval in hours at which funding is paid or received.
+                      paymentType:
+                        type: string
+                        description: The type of funding payment, e.g., 'Receive' or 'Pay'.
+                      status:
+                        type: string
+                        description: The status of the funding transaction, e.g., 'COMPLETED'.
+                      createdTime:
+                        type: integer
+                        format: int64
+                        description: The Unix timestamp when the funding transaction was created.
+                      updatedTime:
+                        type: integer
+                        format: int64
+                        description: The Unix timestamp when the funding transaction was last updated.
+                meta:
+                  $ref: '#/components/schemas/Meta'
+    GetPositionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/CommonResponse'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                rows:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                        description: The trading pair symbol, e.g., PERP_BTC_USDT.
+                      holding:
+                        type: string
+                        description: The current holding quantity of the asset in the position.
+                      positionSide:
+                        type: string
+                        description: The position side, such as 'BOTH' for a long and short position.
+                      pendingLongQty:
+                        type: string
+                        description: The pending quantity for a long position.
+                      pendingShortQty:
+                        type: string
+                        description: The pending quantity for a short position.
+                      settlePrice:
+                        type: string
+                        description: The price at which the position will be settled.
+                      averageOpenPrice:
+                        type: string
+                        description: The average price at which the position was opened.
+                      pnl24H:
+                        type: string
+                        description: The profit and loss (PnL) for the position in the last 24 hours.
+                      fee24H:
+                        type: string
+                        description: The total fee for the position in the last 24 hours.
+                      markPrice:
+                        type: string
+                        description: The mark price of the position.
+                      estLiqPrice:
+                        type: string
+                        description: The estimated liquidation price of the position.
+                      adlQuantile:
+                        type: integer
+                        description: The ADL quantile, a risk management factor.
+                      timestamp:
+                        type: integer
+                        format: int64
+                        description: The timestamp of the position data in Unix epoch time (milliseconds).
+    PositionMode:
+      type: object
+      properties:
+        positionMode:
+          type: string
+          description: ONE_WAY/HEDGE_MODE
+  parameters:
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+    start_filter:
+      name: startTime
+      in: query
+      description: start www time in unix timestamp
+      required: false
+      explode: true
+      schema:
+        type: integer
+    end_filter:
+      name: endTime
+      in: query
+      description: end time in unix timestamp
+      required: false
+      explode: true
+      schema:
+        type: integer
+    page_filter:
+      name: page
+      in: query
+      description: the page you wish to query.
+      required: false
+      explode: true
+      schema:
+        type: integer
+        default: 1
+    size_filter:
+      name: size
+      in: query
+      description: the page size you wish to query, default = 25, 1000 at max.
+      required: false
+      explode: true
+      schema:
+        type: integer
+        default: 25

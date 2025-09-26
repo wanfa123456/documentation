@@ -1,0 +1,59 @@
+{
+	"MarketTradesHistoryResponse": {
+		"allOf": [
+			{
+				"$ref": "../common/commonResponse.json#/CommonResponse"
+			},
+			{
+				"type": "object",
+				"properties": {
+					"data": {
+						"type": "object",
+						"properties": {
+							"rows": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "number",
+											"description": ""
+										},
+										"symbol": {
+											"type": "string",
+											"description": ""
+										},
+										"side": {
+											"type": "string",
+											"description": ""
+										},
+										"executedPrice": {
+											"type": "string",
+											"description": ""
+										},
+										"executedQuantity": {
+											"type": "string",
+											"description": ""
+										},
+										"executedTimestamp": {
+											"type": "number",
+											"description": ""
+										},
+										"source": {
+											"type": "number",
+											"description": ""
+										},
+										"rpi": {
+											"type": "boolean",
+											"description": ""
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}

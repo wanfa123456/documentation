@@ -1,0 +1,32 @@
+---
+title: 'Unsubscribe'
+---
+Unsubscribe from one or more specific topics to stop receiving updates. The maximum number of topics to unsubsribe per request is 20.
+
+<RequestExample>
+
+```bash Subscribed messages
+{
+  "id": .....
+  "cmd": "UN_SUBSCRIBE",
+  "params": ["topic1", "topic2"]
+}
+```
+
+</RequestExample>
+
+
+
+<ResponseExample>
+
+```json Response
+{
+  "id": "{req_id}",
+  "cmd": "UN_SUBSCRIBE",
+  "success": true,
+  "time": {timestamp},
+  "data": ["topic1", "topic2"]
+}
+```
+
+</ResponseExample>

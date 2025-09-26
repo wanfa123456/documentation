@@ -1,0 +1,16 @@
+{
+    "CancelAllAfter": {
+        "required": [
+            "triggerAfter"
+        ],
+        "type": "object",
+        "properties": {
+            "triggerAfter": {
+                "type": "integer",
+                "description": "Timeout in ms.  Max timeout can be set to 900000.  To cancel this timer, set timeout to 0.",
+                "example": "1711534302938"
+            }
+            
+        }
+    }
+}

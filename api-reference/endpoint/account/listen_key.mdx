@@ -1,0 +1,9 @@
+---
+title: 'Get listen key'
+openapi: 'POST /v3/account/listenKey'
+---
+**Limit 5 requests per 10 seconds** 
+
+Create a listen key for private streamings which can be accessed at `{base_wss_stream`}?key=`<listenKey>`.  If a valid listen key already exists, the system will create a new one and immediately expire the old key. Each listen key remains valid for 24 hours.
+
+

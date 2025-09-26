@@ -1,0 +1,23 @@
+{
+    "get": {
+      "description": "get spot margin interest history",
+      "parameters": {
+        "$ref": "../../parameters/getInterestHistory.json#/parameters"
+      },
+      "responses": {
+        "200": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../responses/GetInterestHistoryResponse.json#/GetInterestHistoryResponse"
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        
+      ]
+    }
+  }

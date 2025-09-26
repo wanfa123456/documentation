@@ -1,0 +1,79 @@
+{
+	"FuturesResponse": {
+		"allOf": [
+			{
+				"$ref": "../common/commonResponse.json#/CommonResponse"
+			},
+			{
+				"type": "object",
+				"properties": {
+					"data": {
+						"type": "object",
+						"properties": {
+							"rows": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"symbol": {
+											"type": "string",
+											"description": ""
+										},
+										"indexPrice": {
+											"type": "string",
+											"description": ""
+										},
+										"markPrice": {
+											"type": "string",
+											"description": ""
+										},
+										"estFundingRate": {
+											"type": "string",
+											"description": ""
+										},
+										"lastFundingRate": {
+											"type": "string",
+											"description": ""
+										},
+										"openInterest": {
+											"type": "string",
+											"description": ""
+										},
+										"24hOpen": {
+											"type": "string",
+											"description": ""
+										},
+										"24hClose": {
+											"type": "string",
+											"description": ""
+										},
+										"24hHigh": {
+											"type": "string",
+											"description": ""
+										},
+										"24hLow": {
+											"type": "string",
+											"description": ""
+										},
+										"24hVolume": {
+											"type": "string",
+											"description": ""
+										},
+										"24hAmount": {
+											"type": "string",
+											"description": ""
+										},
+										"nextFundingTime": {
+											"type": "number",
+											"description": ""
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}

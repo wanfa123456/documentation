@@ -1,217 +1,222 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
-  "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Swagger Petstore - OpenAPI 3.0",
+        "description": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Team",
+            "email": "apiteam@swagger.io"
         },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "webhooks": {
-    "/plant/webhook": {
-      "post": {
-        "description": "Information about a new plant added to the store",
-        "requestBody": {
-          "description": "Plant added to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          }
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
+        "version": "1.0.19"
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    },
+    "servers": [
+        {
+            "url": "https://api.woox.io/"
+        }
+    ],
+
+    "paths": {
+        "/v3/public/systemInfo": {
+          "$ref": "path/public_data/systemInfo.json"
+        },
+        "/v3/public/instruments": {
+          "$ref": "path/public_data/instruments.json"
+        },
+        "/v3/public/token": {
+          "$ref": "path/public_data/token.json"
+        },
+        "/v3/public/tokenNetwork": {
+          "$ref": "path/public_data/tokenNetwork.json"
+        },
+        "/v3/public/tokenInfo": {
+          "$ref": "path/public_data/tokenInfo.json"
+        },
+        "/v3/public/marketTrades": {
+          "$ref": "path/public_data/marketTrades.json"
+        },
+        "/v3/public/marketTradesHistory": {
+          "$ref": "path/public_data/marketTradesHistory.json"
+        },
+        "/v3/public/orderbook": {
+          "$ref": "path/public_data/orderbook.json"
+        },
+        "/v3/public/kline": {
+          "$ref": "path/public_data/kline.json"
+        },
+        "/v3/public/klineHistory": {
+          "$ref": "path/public_data/klineHistory.json"
+        },
+        "/v3/public/fundingRate": {
+          "$ref": "path/public_data/fundingRate.json"
+        },
+        "/v3/public/fundingRateHistory": {
+          "$ref": "path/public_data/fundingRateHistory.json"
+        },
+        "/v3/public/futures": {
+          "$ref": "path/public_data/futures.json"
+        },
+        "/v3/public/insuranceFund": {
+          "$ref": "path/public_data/insuranceFund.json"
+        },
+        "/v3/trade/order": {
+          "$ref": "path/trade/order.json"  
+        },
+        "/v3/trade/orders": {
+          "$ref": "path/trade/orders.json"  
+        },
+        "/v3/trade/algoOrder": {
+          "$ref": "path/trade/algoOrder.json"  
+        },
+        "/v3/trade/algoOrders": {
+          "$ref": "path/trade/algoOrders.json"  
+        },
+        "/v3/trade/allOrders": {
+          "$ref": "path/trade/allOrders.json"  
+        },
+        "/v3/trade/transaction": {
+          "$ref": "path/trade/transaction.json"  
+        },
+        "/v3/trade/transactionHistory": {
+          "$ref": "path/trade/transactions.json"  
+        },
+        "/v3/trade/tradingFee": {
+          "$ref": "path/trade/tradingFee.json"  
+        },
+        "/v3/trade/cancelAllAfter": {
+          "$ref": "path/trade/cancelAllAfter.json"  
+        },
+        "/v3/account/referral/summary": {
+          "$ref": "path/account/summary.json"
+        },
+        "/v3/account/referral/rewardHistory": {
+          "$ref": "path/account/referral_history.json"
+        },
+        "/v3/account/tokenConfig": {
+          "$ref": "path/account/token_config.json"
+        },
+        "/v3/account/symbolConfig": {
+          "$ref": "path/account/symbol_config.json"
+        },
+        "/v3/account/info": {
+          "$ref": "path/account/account_info.json"
+        },
+        "/v3/account/tradingMode": {
+          "$ref": "path/account/trading_mode.json"
+        },
+        "/v3/account/credentials": {
+          "$ref": "path/account/credentials.json"
+        },
+        "/v3/account/subAccounts/all": {
+          "$ref": "path/account/sub_accounts.json"
+        },
+        "/v3/account/listenKey": {
+          "$ref": "path/account/listen_key.json"
+        },
+        "/v3/spotMargin/leverage": {
+          "$ref": "path/spot_margin/leverage.json"
+        },
+        "/v3/spotMargin/interestRate": {
+          "$ref": "path/spot_margin/interest_rate.json"
+        },
+        "/v3/spotMargin/interestHistory": {
+          "$ref": "path/spot_margin/interest_history.json"
+        },
+        "/v3/spotMargin/interestRepay": {
+          "$ref": "path/spot_margin/interest_repay.json"
+        },
+        "/v3/spotMargin/maxMargin": {
+          "$ref": "path/spot_margin/max_margin.json"
+        },
+        "/v3/asset/token/history": {
+          "$ref": "path/asset/token_history.json"
+        },
+        "/v3/asset/transfer/history": {
+          "$ref": "path/asset/get_transfer_history.json"
+        },
+        "/v3/asset/transfer": {
+          "$ref": "path/asset/transfer.json"
+        },
+        "/v3/asset/wallet/history": {
+          "$ref": "path/asset/get_wallet_history.json"
+        },
+        "/v3/asset/wallet/deposit": {
+          "$ref": "path/asset/get_wallet_deposit.json"
+        },
+        "/v3/asset/wallet/withdraw/{withdrawId}": {
+          "$ref": "path/asset/wallet_withdraw_del.json"
+        },
+        "/v3/asset/wallet/withdraw": {
+          "$ref": "path/asset/wallet_withdraw.json"
+        },
+        "/v3/asset/staking/yieldHistory": {
+          "$ref": "path/asset/get_yield_history.json"
+        },
+        "/v3/asset/balances": {
+          "$ref": "path/asset/get_balances.json"
+        },
+        "/v3/futures/defaultMarginMode": {
+          "$ref": "path/futures/defaultMarginMode.json"
+        },
+        "/v3/futures/defaultMarginMode/{symbol}": {
+          "$ref": "path/futures/set_symbol_margin_mode.json"
+        },
+        "/v3/futures/defaultMarginMode/reset": {
+          "$ref": "path/futures/reset_defaultMarginMode.json"
+        },
+        "/v3/futures/leverage": {
+          "$ref": "path/futures/futures_leverage.json"
+        },
+        "/v3/isolatedMargin/margin": {
+          "$ref": "path/futures/adjust_margin.json"
+        },
+        "/v3/futures/fundingFee/history": {
+          "$ref": "path/futures/get_fundingFee_history.json"
+        },
+        "/v3/futures/positions": {
+          "$ref": "path/futures/get_positions.json"
+        },
+        "/v3/futures/positionMode": {
+          "$ref": "path/futures/position_mode.json"
+        }
+    },
+    "components": {
+      
+        "securitySchemes": {
+            
+            "bearerAuth": {
+                "type": "http",
+                "scheme":"bearer",
+                "bearerFormat":"JWT"
+            },
+            "api_key": {
+                "type": "apiKey",
+                "name": "api_keyqq",
+                "in": "header"
+            },
+            "ApiKeyAuth": {
+              "type": "apiKey",
+              "in": "header",
+              "name": "x-api-key"
+            },
+            "ApiSignAuth": {
+              "type": "apiKey",
+              "in": "header",
+              "name": "x-api-signature"
+            },
+            "ApiTimestampAuth": {
+              "type": "apiKey",
+              "in": "header",
+              "name": "x-api-timestamp"
+            }
+        }
     }
-  }
 }

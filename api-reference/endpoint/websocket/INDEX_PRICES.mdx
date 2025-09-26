@@ -1,0 +1,41 @@
+---
+title: 'Index prices'
+description: ''
+---
+
+### Topic: indexprices  
+Push interval: 1s  
+Subscribe to the index prices across all symbols.  
+
+
+
+
+
+<ResponseExample>
+
+```bash
+{
+    "topic": "indexprices",
+    "ts": 1618820361552,
+    "data": {
+        "rows": [
+            {
+                "s": "SPOT_BTC_USDT",  // symbol
+                "px": "50000.1",        // price
+                "ts": 1618820361552    // timestamp at which the index price was calculated
+            },
+            {
+                "s": "SPOT_ETH_USDT",  // symbol
+                "px": "3987.1",        // price
+                "ts": 1618820361552    // timestamp at which the index price was calculated
+            },
+            ...
+        ],
+        "ts": 1618820361552 //
+    }
+}
+```
+
+</ResponseExample>
+
+

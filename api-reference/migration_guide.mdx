@@ -1,0 +1,436 @@
+---
+title: 'Migration guide'
+description: ''
+---
+
+## API interface mapping
+
+### Public
+| Legacy API | V3 API |
+|--------|--------|
+| `/v1/public/system_info` | `/v3/public/systemInfo` |
+| `/v1/public/info` | `/v3/public/instruments` |
+| `/v1/public/info/:symbol` | `/v3/public/instruments` |
+| `/v1/public/market_trades` | `/v3/public/marketTrades` |
+| `https://api-pub.woo.org/v1/hist/trade` | `/v3/public/marketTradesHistory` |
+| `/v1/public/orderbook/:symbol` | `/v3/public/orderbook` |
+| `/v1/public/kline` | `/v3/public/kline` |
+| `https://api-pub.woo.org/v1/hist/kline` | `/v3/public/klineHistory` |
+| `/v1/public/token` | `/v3/public/token` |
+| `/v1/public/token` | `/v3/public/tokenInfo` |
+| `/v1/public/token_network` | `/v3/public/tokenNetwork` |
+| `/v1/public/funding_rates` | `/v3/public/fundingRate` |
+| `/v1/public/funding_rate/:symbol` | `/v3/public/fundingRate` |
+| `/v1/public/funding_rate_history` | `/v3/public/fundingRateHistory` |
+| `/v1/public/futures` | `/v3/public/futures` |
+| `/v1/public/futures/:symbol` | `/v3/public/futures` |
+
+
+
+### Trading
+| Legacy API | V3 API |
+|-----------------------------------|-----------------------------|
+| `POST /v1/order` | `POST /v3/trade/order` |
+| `DELETE /v1/order` | `DELETE /v3/trade/order` |
+| `DELETE /v1/client/order` | `DELETE /v3/trade/order` |
+| `DELETE /v1/orders` | `DELETE /v3/trade/orders` |
+| `DELETE /v3/orders/pending` | `DELETE /v3/trade/orders` |
+| `GET /v1/order/:oid` | `GET /v3/trade/order` |
+| `GET /v1/client/order/:client_order_id` | `GET /v3/trade/order` |
+| `GET /v1/orders` | `GET /v3/trade/orders` |
+| `PUT /v3/order/:order_id` | `PUT /v3/trade/order` |
+| `PUT /v3/order/client/:client_order_id` | `PUT /v3/trade/order` |
+| `POST /v3/algo/order` | `POST /v3/trade/algoOrder` |
+| `DELETE /v3/algo/order/:order_id` | `DELETE /v3/trade/algoOrder` |
+| `DELETE /v3/algo/orders/pending` | `DELETE /v3/trade/algoOrders` |
+| `DELETE /v3/merge/orders/pending/:symbol` | `DELETE /v3/trade/allOrders` |
+| `GET /v3/algo/order/:oid` | `GET /v3/trade/algoOrder` |
+| `GET /v3/algo/orders` | `GET /v3/trade/algoOrders` |
+| `PUT /v3/algo/order/:order_id` | `PUT /v3/trade/algoOrder` |
+| `PUT /v3/algo/order/client/:client_order_id` | `PUT /v3/trade/algoOrder` |
+| `GET /v1/client/trade/:tid` | `GET /v3/trade/transaction` |
+| `GET /v1/order/:oid/trades` | `GET /v3/trade/transactionHistory` |
+| `GET /v1/client/trades` | `GET /v3/trade/transactionHistory` |
+| `GET /v1/client/hist_trades` | `GET /v3/trade/transactionHistory` |
+| `POST /v1/order/cancel_all_after` | `POST /v3/trade/cancelAllAfter` |
+
+### Account
+| Legacy API | V3 API |
+|--------|--------|
+| `GET /v1/client/info` |  `GET /v3/account/info` |
+| `GET /v3/accountinfo` |  `GET /v3/account/info` |
+| `GET /v1/client/token` | `GET /v3/account/tokenConfig`  |
+| `GET /v1/client/token` | `GET /v3/account/symbolConfig` |
+| `POST /v1/client/account_mode` | `POST /v3/account/tradingMode` |
+| `GET /v3/referrals` | `GET /v3/account/referral/summary` |
+| `GET /v3/referral_rewards` | `GET /v3/account/referral/rewardHistory` |
+| `GET /usercenter/api/enabled_credential` | `GET /v3/account/credentials` |
+| `GET /v1/sub_account/all` | `GET /v3/account/subAccounts/all` |
+
+### Assets
+| Legacy API | V3 API |
+|--------|--------|
+| `GET /v1/client/holding` | `GET /v3/asset/balances` |
+| `GET /v2/client/holding` | `GET /v3/asset/balances` |
+| `GET /v3/balances` | `GET /v3/asset/balances` |
+| `GET /v1/client/transaction_history` | `GET /v3/asset/token/history` |
+| `POST /v1/asset/main_sub_transfer` | `POST /v3/asset/transfer` |
+| `GET /v1/asset/main_sub_transfer_history` | `GET /v3/asset/transfer/history` |
+| `GET /v1/asset/deposit` | `GET /v3/asset/wallet/deposit` |
+| `POST /v1/asset/withdraw` | `POST /v3/asset/wallet/withdraw`  |
+| `POST /v3/asset/withdraw` | `POST /v3/asset/wallet/withdraw` |
+| `GET /v1/asset/history` | `GET /v3/asset/wallet/history` |
+
+### Futures
+| Legacy API | V3 API |
+|--------|--------|
+| `GET /v1/positions` | `GET /v3/futures/positions` |
+| `GET /v3/positions` | `GET /v3/futures/positions` |
+| `GET /v1/position/:symbol` | `GET /v3/futures/positions` |
+| `POST /v1/client/position_mode` | `PUT /v3/futures/positionMode` |
+| `GET /v1/client/futures_leverage` | `GET /v3/futures/leverage` |
+| `POST /v1/client/futures_leverage` | `PUT /v3/futures/leverage` |
+| `GET /v1/funding_fee/history` | `GET /v3/futures/fundingFee/history` |
+
+### Spot margin
+| Legacy API | V3 API |
+|--------|--------|
+| `POST /v1/client/leverage` | `POST /v3/spotMargin/leverage` |
+| `GET /v1/token_interest` | `GET /v3/spotMargin/interestRate` |
+| `GET /v1/token_interest/:token` | `GET /v3/spotMargin/interestRate` |
+| `GET /v1/interest/history` | `GET /v3/spotMargin/interestHistory` |
+| `POST /v1/interest/repay` | `POST /v3/spotMargin/interestRepay` |
+| `GET /v3/buypower` | `GET /v3/spotMargin/maxMargin` |
+
+
+## Code example
+### GET demo
+#### V3
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def get_v3(base_url, request_path):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'GET' + request_path
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp)
+    }
+    response = requests.get(base_url + request_path, headers=headers)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+get_v3(base_url, '/v3/trade/order?orderId={orderId}')
+```
+#### Legacy V1
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def get_legacy_v1(base_url, request_path):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'GET' + request_path
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    }
+    response = requests.get(base_url + request_path, headers=headers)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+get_legacy_v1(base_url, '/v1/order/{orderId}')
+```
+#### Legacy V3
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def get_legacy_v3(base_url, request_path):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'GET' + request_path
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    }
+    response = requests.get(base_url + request_path, headers=headers)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+get_legacy_v3(base_url, '/v1/order/{orderId}')
+```
+### POST demo
+#### V3
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def post_v3(base_url, request_path, request_body):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'POST' + request_path + request_body
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp),
+        'Content-Type': 'application/json'
+    }
+    response = requests.post(base_url + request_path, headers=headers, data=request_body)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+post_v3(base_url, '/v3/trade/order', '''{
+    "symbol": "{symbol}",
+    "side": "{side}",
+    "type": "{type}",
+    "price": "{price}",
+    "quantity": "{quantity}"
+}''')
+```
+#### Legacy V1
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def post_legacy_v1(base_url, request_path, request_body):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'POST' + request_path + request_body
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    }
+    response = requests.post(base_url + request_path, headers=headers, data=request_body)
+    result = response.json()
+    print(result)
+
+base_url = 'https://api.woox.io'
+post_legacy_v1(base_url, '/v1/order', 'order_price={order_price}&order_quantity={order_quantity}&order_type={order_type}&side={side}&symbol={symbol}')
+```
+#### Legacy V3
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def post_legacy_v3(base_url, request_path, request_body):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'POST' + request_path + request_body
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+    headers = {
+        'x-api-timestamp': str(timestamp),
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'Content-Type': 'application/json'
+    }
+    response = requests.post(base_url + request_path, headers=headers, data=request_body)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+post_legacy_v3(base_url, '/v3/algo/order','''{
+    "symbol": {symbol},
+    "side": {side},
+    "algoType": {algoType},
+    "triggerPrice": {triggerPrice},
+    "type": {type},
+    "quantity": {quantity},
+    "price": {price}
+}''')
+```
+### PUT demo
+#### V3
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def put_v3(base_url, request_path, request_body):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'PUT' + request_path + request_body
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp),
+        'Content-Type': 'application/json'
+    }
+    response = requests.put(base_url + request_path, headers=headers, data=request_body)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+put_v3(base_url, '/v3/trade/order', '''{
+    "orderId": "{orderId}",
+    "price": "{price}",
+    "quantity": "{quantity}"
+}''')
+
+```
+#### Legacy V3
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def put_legacy_v3(base_url, request_path, request_body):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'PUT' + request_path + request_body
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+    headers = {
+        'x-api-timestamp': str(timestamp),
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'Content-Type': 'application/json'
+    }
+    response = requests.put(base_url + request_path, headers=headers, data=request_body)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+put_legacy_v3(base_url, '/v3/algo/order/{orderId}','''{
+    "price": {price}
+}''')
+```
+### DELETE demo
+#### V3
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def delete_v3(base_url, request_path):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'DELETE' + request_path
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp)
+    }
+    response = requests.delete(base_url + request_path, headers=headers)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+delete_v3(base_url, '/v3/trade/order?symbol={symbol}&orderId={orderId}')
+```
+#### Legacy V1
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def delete_legacy_v1(base_url, request_path, request_parameter):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'DELETE' + request_path + request_parameter
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    }
+    response = requests.delete(base_url + request_path, headers=headers, data=request_parameter)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+delete_legacy_v1(base_url, '/v1/order', 'order_id={orderId}&symbol={symbol}')
+```
+#### Legacy V3
+```python
+import requests
+import datetime
+import hmac, hashlib
+
+def delete_legacy_v3(base_url, request_path):
+    api_key = '{put your api_key here}'
+    api_secret = '{put your api_secret here}'
+    timestamp = round(datetime.datetime.now().timestamp() * 1000)
+
+    signString = str(timestamp) + 'DELETE' + request_path
+    api_signature = hmac.new(bytes(api_secret, 'utf-8'), bytes(signString, 'utf-8'), hashlib.sha256).hexdigest()
+
+    headers = {
+        'x-api-key': api_key,
+        'x-api-signature': api_signature,
+        'x-api-timestamp': str(timestamp),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    }
+    response = requests.delete(base_url + request_path, headers=headers)
+    result = response.json()
+    print(result)
+    return result
+
+base_url = 'https://api.woox.io'
+delete_legacy_v3(base_url, '/v3/algo/order/{orderId}')
+
+
+

@@ -1,0 +1,76 @@
+---
+title: 'Introduction'
+description: ''
+---
+
+### Public streams
+wss://wss.woox.io/v3/public (Production)
+
+wss://wss.staging.woox.io/v3/public (Staging)
+
+### Private streams
+wss://wss.woox.io/v3/private (Production)
+
+wss://wss.staging.woox.io/v3/private (Staging)
+
+
+
+### Authentication
+
+<Note>
+  Public market data topics do not require authentication.
+</Note>
+
+
+
+
+Authentication is required for subscribing to private user data streams (e.g., order updates, account info).
+
+To authenticate:  
+
+1. **Obtain a listen key**  
+Call the following <a href="endpoint/account/listen_key" target="_self">endpoint</a> to get your listenKey.
+
+2. **Connect to the WebSocket**  
+Use the WebSocket base URL and append your listen key as a query parameter at `{base_wss_url}`?key=`<listenKey>`.
+
+Once connected, you may subscribe to various private topics using subscription commands.  See <a href="endpoint/websocket/subscribe" target="_self">subscription commands</a> for full details.
+
+
+
+
+## Additional information
+ ### General
+Each WebSocket connection is valid for a maximum of 24 hours.  Expect automatic disconnection at the 24-hour mark.
+
+
+
+### Connection limits
+A client IP can establish a maximum of 100 connections every 5 minutes.  Exceeding this will result in rejected attempts and a cooldown period.
+
+A client IP can maintain up to 100 active WebSocket connections at any given time.  Any attempt to exceed this will result in new connections being denied.
+
+Note: Extensive retries after hitting limits will result in an IP ban.
+
+### Subscription limits
+Each connection can subscribe to a maximum of 100 live topics simultaneously.  Further subscription attempts will be rejected once this limit is reached.
+
+When submitting batch subscriptions, the server processes them sequentially.  If the subscription limit is reached mid-way, the server will accept subscriptions until the limit is met.  Any subscriptions that exceed the limit will be rejected.  The maximum number of topics to subscribe per request is 20.
+
+While subscribing to topics within a single connection, it is not recommended to exceed 200 TPS.
+
+### Ping-Pong mechanism
+The server supports a Ping-Pong mechanism for clients to verify connectivity and measure round-trip latency. This is not required for keep-alive purposes.
+#### Example
+**Client sends:**
+```bash
+{ "cmd": "PING", "ts": 1750641291182 } 
+```
+**Server responds:**
+```bash
+{ "cmd": "PONG", "success": true, "time": 1750641291322 } 
+```
+
+
+
+

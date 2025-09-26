@@ -1,0 +1,67 @@
+{
+	"KlineHistoryResponse": {
+		"allOf": [
+			{
+				"$ref": "../common/commonResponse.json#/CommonResponse"
+			},
+			{
+				"type": "object",
+				"properties": {
+					"data": {
+						"type": "object",
+						"properties": {
+							"rows": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"symbol": {
+											"type": "string",
+											"description": ""
+										},
+										"open": {
+											"type": "string",
+											"description": ""
+										},
+										"close": {
+											"type": "string",
+											"description": ""
+										},
+										"high": {
+											"type": "string",
+											"description": ""
+										},
+										"low": {
+											"type": "string",
+											"description": ""
+										},
+										"volume": {
+											"type": "string",
+											"description": ""
+										},
+										"amount": {
+											"type": "string",
+											"description": ""
+										},
+										"type": {
+											"type": "string",
+											"description": ""
+										},
+										"startTimestamp": {
+											"type": "number",
+											"description": ""
+										},
+										"endTimestamp": {
+											"type": "number",
+											"description": ""
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		]
+	}
+}

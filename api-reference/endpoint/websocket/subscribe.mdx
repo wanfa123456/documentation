@@ -1,0 +1,32 @@
+---
+title: 'Subscribe'
+---
+Subscribe to one or more topics to start receiving updates. The maximum number of topics to subscribe per request is 20.
+
+<RequestExample>
+
+```bash Subscribed messages
+{
+  "id": .....
+  "cmd": "SUBSCRIBE",
+  "params": ["topic1", "topic2"]
+}
+```
+
+</RequestExample>
+
+
+
+<ResponseExample>
+
+```json Response
+{
+  "id": "{req_id}",
+  "cmd": "SUBSCRIBE",
+  "success": true,
+  "time": {timestamp},
+  "data": ["topic1", "topic2"]
+}
+```
+
+</ResponseExample>

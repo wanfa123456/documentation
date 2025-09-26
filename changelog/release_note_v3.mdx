@@ -1,0 +1,54 @@
+---
+title: V3 API
+description: ""
+icon: "layer-group"
+---
+
+
+
+
+<Update label="2025-07-14" description="">
+**Retail Price Improvement (RPI) Now Live**  
+
+The RPI order type is now supported across REST and WebSocket V3 APIs, enabling market makers to provide improved execution for retail flow. Key API updates include:  
+**REST API Updates**
+- **Get Instruments** `GET /v3/public/instruments`
+Added `isAllowedRpi` field to indicate whether RPI is enabled for the symbol.
+- **Market Trades** `GET /v3/public/marketTrades`  
+Added `rpi` field to response to indicate whether the trade was matched via RPI.  
+- **Market Trades History** `GET /v3/public/marketTradesHistory`  
+Added `rpi` field to response to indicate whether the trade was matched via RPI.  
+- **Orderbook Snapshot** `GET /v3/public/orderbook`  
+Added `rpi` field as an optional request parameter to get the order book with both non-RPI and RPI.  
+- **Place Order** `POST /v3/trade/order`  
+Now supports submitting orders with the `RPI` order type.  
+- **Get Orders** `GET /v3/trade/orders`  
+Supports filtering by `RPI` order type.  
+- **Transaction by Trade ID (Last 3 Months)** `GET /v3/trade/transaction`  
+Added `isMatchRPI` field to response to indicate whether the trade was matched via RPI.  
+- **Transaction History (Past 2 Years)** `GET /v3/trade/transactionHistory`
+Added `isMatchRPI` field to response to indicate whether the trade was matched via RPI.
+
+
+**WebSocket API Updates** 
+- **Orderbook Update (RPI)**
+New topic providing order book updates that include both RPI and non-RPI orders.
+- **Best Bid/Offer (RPI)**
+New topic broadcasting BBO updates, including both RPI and non-RPI quotes.
+- **Trade Topic**
+Added `rpi` field to messages to indicate whether the trade was matched via RPI.
+- **Execution Report**
+Added `rpi` field to messages to indicate whether the trade was matched via RPI.
+</Update>
+
+
+<Update label="2025-06-29" description="">
+**New V3 APIs Now Live**  
+The latest V3 REST and WebSocket APIs are now officially live.  
+ They offer improved performance, reduced latency, and a more consistent developer experience.  
+
+
+</Update>
+
+
+

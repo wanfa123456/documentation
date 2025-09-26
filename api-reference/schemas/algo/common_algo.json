@@ -1,0 +1,41 @@
+{
+    "common_algo": {
+        "type": "object",
+        "required": ["symbol", "algoType"],
+        "properties": {
+            "symbol": {
+                "type": "string",
+                "description": "Symbol name"
+            },
+            
+            "clientAlgoOrderId": {
+                "type": "integer",
+                "description": "Client algo order Id as assigned by the user"
+            },
+            "algoOrderTag": {
+                "type": "string",
+                "description": "An optional tag for this order, max string length: 64"
+            },
+            "side": {
+                "type": "string",
+                "description": "BUY/SELL, not required for POSITIONAL_TP_SL or TP_SL order"
+            },
+            "positionSide": {
+                "type": "string",
+                "description": "BOTH for one way mode; LONG or SHORT for hedge mode;  Only applicable to perpetual instruments"
+            },
+            "quantity": {
+                "type": "string",
+                "description": "Order quantity, not required for POSITIONAL_TP_SL order"
+            },
+            "visibleQuantity": {
+                "type": "string",
+                "description": "The order quantity shown on orderbook;  for POSITIONAL_TP_SL order, visibleQuantity applies directly to the child orders"
+            },
+            "marginMode": {
+                "type": "string",
+                "description": "CROSS / ISOLATED"
+            }
+        }
+    }
+}

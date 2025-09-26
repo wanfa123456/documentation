@@ -1,0 +1,7 @@
+---
+title: 'Cancel all after'
+openapi: 'POST /v3/trade/cancelAllAfter'
+---
+**Limit: 10 requests per 1 second**  
+Provide a dead man switch to ensure user orders are canceled in case of an outage. If called repeatedly, the new timeout offset will replace the existing one if already set.When count down hits 0, all of the user’s ordinary and algo orders will be canceled. This API is only available to VIP users. Please reach out to customer service for more information.
+

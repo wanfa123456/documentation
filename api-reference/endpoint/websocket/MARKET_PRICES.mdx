@@ -1,0 +1,38 @@
+---
+title: 'Mark prices'
+description: ''
+---
+
+### Topic: markprices
+Push interval: 1s  
+Subscribe to the mark prices for all symbols.  
+
+
+
+
+
+<ResponseExample>
+
+```bash
+{
+    "topic": "markprices",
+    "ts": 1618822376000,
+    "data":[
+        {
+            "s": "PERP_BTC_USDT",  // symbol
+            "px": "51234.13",      // mark price
+            "ts": 1618822376000    // timestamp at which the mark price was calculated
+        },
+        {
+            "s": "PERP_ETH_USDT",  // symbol
+            "px": "3894.34",       // mark price
+            "ts": 1618822376000    // timestamp at which the mark price was calculated
+        },
+       ...
+    ]
+}
+```
+
+</ResponseExample>
+
+
